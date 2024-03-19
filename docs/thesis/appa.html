@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<meta name="GENERATOR" content="TtH 3.22">
+ <style type="text/css"><!--
+ td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
+ td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
+ td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
+ td div.norm {line-height:normal;}
+ span.roman {font-family: serif; font-style: normal; font-weight: normal;} 
+ span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
+ span.overacc1 {position: relative;  left: .6em; top: -1.2ex;} --></style>
+
+                                                                                      
+<title>Appendix A: Beowulf Clusters and the Development of a 3D hybrid code</title>
+
+<div class="p"></div>
+     <h1><a name="tth_chApA">
+Appendix A </a><br />Beowulf Clusters and the Development of a 3D hybrid code</h1>
+<a name="chap:3dcode">
+</a>
+
+
+<div class="p"></div>
+This appendix discusses our work towards creating a 3-D hybrid simulation code.  It rapidly became clear that it would not be practical for a code running on a single machine to simulate a sufficiently large spatial grid for long enough to study the formation of ripples in shocks.  A 3-D study is important in this context because nothing constrains wave activity in a shock to be coplanar with the magnetic field, although this condition is forced upon us by a 2-D code.  We discuss the challenge of writing parallel simulation codes and how we are applying the ideas described in Chapter <a href="chap3.html">3</a> to implement a parallel 3-D hybrid plasma code.
+
+<div class="p"></div>
+ <h2><a name="tth_sEcA.1">
+A.1</a>&nbsp;&nbsp;Beowulf Clusters</h2>
+
+<div class="p"></div>
+The availability of computational resources is an important consideration when choosing a simulation algorithm and designing a simulation's initial conditions.  Much research has recently been done into the viability of using clusters of identical Commodity Off The Shelf (COTS) PCs connected by fast networking hardware to provide large amounts of processing power, memory and storage at a small fraction of the cost of an equivalent supercomputer [<a href="refs.html#sterling++99" name="CITEsterling++99">Sterling <em>et&nbsp;al.</em>, 1999</a>].  It is important that the computers, or nodes, are identical and dedicated purely to the cluster.  This can help to reduce issues of load balancing, which would mean that the whole cluster had to wait for results from one heavily worked node.  Such clusters of machines, known as Beowulf clusters, are ideal for conducting fluid, kinetic plasma and MHD simulations.  
+
+<div class="p"></div>
+The current obstacle to exploiting this cheap power is a lack of experience in the area of parallel simulations and a lack of available software to ease the writing of such powerful algorithms.  This is because a parallel simulation code must be designed and written in a very different manner to a conventional serial code.  In particular, attention must be paid to the distribution of information across the cluster and the communication of data between nodes.  We have invested a considerable amount of time in learning to exploit such a cluster configuration and much of the work in this thesis has been conducted on a Beowulf cluster.  We are also in the process of developing a 3-D hybrid code that allows data on a large simulation grid to be distributed and processed across the cluster.
+
+<div class="p"></div>
+The test particle simulations described in Chapter <a href="chap5.html">5</a> were conducted using the CHEEP cluster. This is an eight node cluster of 400&nbsp;MHz Pentium II PCs which we used as a pilot project to demonstrate the use of a Beowulf cluster.  Additional test particle simulations in Chapter <a href="chap6.html">6</a> use the commissioning configuration of the Myriad cluster.  In its initial commissioning, the cluster consisted of twenty-two 650&nbsp;MHz Pentium III processors being served by one "Mayor" node, which mounts the home directories and scratch space. In the case of both CHEEP and Myriad, inter-node communications are achieved using a fast Ethernet switch.  When the Myriad cluster goes live, it will consist of a total of thirty-two Pentium III processors, with the original eight CHEEP nodes being used as an auxiliary development cluster.
+
+<div class="p"></div>
+ <h2><a name="tth_sEcA.2">
+A.2</a>&nbsp;&nbsp;Parallel Algorithms</h2>
+
+<div class="p"></div>
+
+<h4>Efficiency</h4>
+
+<div class="p"></div>
+The efficiency of a parallel process determines how much faster the code will run when compared to a serial version.  Amdahl's law tells us the speedup that we can expect by parallelising our code [<a href="refs.html#butenhof97" name="CITEbutenhof97">Butenhof, 1997</a>]:
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+<span class="roman">Speedup</span> = </td><td nowrap="nowrap" align="center">
+&nbsp;1
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div><table border="0"><tr><td nowrap="nowrap" align="center">
+(1<font face="symbol">-</font
+>p)+</td><td nowrap="nowrap" align="center">
+&nbsp;p
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>n<br /></td></tr></table></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(A.1)</td></tr></table>
+
+
+where n is the number of processors and p is the ratio of parallel code running time to total execution time.  This is simply a statement that the more of the code that can be parallelised, the greater the speedup.  This is a simplification because it does not take into account the overheads involved in parallelising a code.  In particular, it is important that a parallel task should be compute bound, as opposed to network bound, so that such overheads are kept to a minimum. In other words, the speed with which the program runs should be restricted by the time it takes to process the information rather than the time it takes to move information across the network.
+
+<div class="p"></div>
+Another important factor when considering the overhead imposed by parallelising a code is load balancing. It is possible for all nodes in a cluster to be waiting for a single node to finish a particular task.  If we are to reduce the total time wasted in this way, then we need to balance the problem in such a way that, at each stage, all the nodes complete as near to simultaneously as possible.  There are other reasons, apart from a reduction in execution time, for producing a parallel code.  In the case of our 3-D hybrid code, for example, we are just as interested in the vastly increased pool of memory that is available to us on a Beowulf cluster.
+
+<div class="p"></div>
+
+<h4>Implementation</h4>
+
+<div class="p"></div>
+Process level parallelism is the simplest way to implement a parallel algorithm.  Problems that can be divided across a number of processes that do not need to communicate with each other are also known as "embarrassingly parallel" and they are very easy to implement.  This is true of any code in which copies of the same program are run independently with different initial parameters.  The parallelism is simply achieved by running separate copies of the program on each node of a cluster, possibly with some form of aggregation of the results once the computation is finished.  As an example, this is likely to be true of a search of parameter space.  It is also true of our electron test particle code, since the trajectories of one test particle do not depend on the properties of any other test particle.  This type of parallelism has the obvious advantages that both programmer effort and network usage are minimal.  Unfortunately, many algorithms do require different parts of the simulation to interact and are not suited to such an implementation.  The CAM-CL algorithm is an example of this, since the calculation of moments requires the position and velocity data of all particles to be combined.
+
+<div class="p"></div>
+A much more flexible approach to writing parallel applications is that of message passing.  The power of this type of parallelism is that data is exchanged via messages between parts of the code running on different nodes.  A number of programming libraries are available which implement message passing, the most commonly used being PVM [<a href="refs.html#geist++94" name="CITEgeist++94">Geist <em>et&nbsp;al.</em>, 1994</a>] and MPI [<a href="refs.html#gropp++99a" name="CITEgropp++99a">Gropp <em>et&nbsp;al.</em>, 1999a</a>,<a href="refs.html#gropp++99b" name="CITEgropp++99b">Gropp <em>et&nbsp;al.</em>, 1999b</a>].  This provides great flexibility in the development of an algorithm, but increases programming complexity dramatically.  This approach was used by <a href="refs.html#woodcock97" name="CITEwoodcock97">Woodcock [1997]</a> to produce the parallelised implementation of the CAM-CL algorithm that we use.  This is also the type of parallelism that we are using for our 3-D hybrid code.
+
+<div class="p"></div>
+We attempt to separate the message passing aspect of our 3-D code from the computational algorithm by using a multi-threaded programming approach.  The program executing on each node consists of two threads which run simultaneously.  One thread handles the computation and sends out requests for any data that it needs.  The other thread received these requests and services them, finding the required data and sending it to the node that requested it.  This ensures that requests for data are served immediately and nodes are not kept waiting longer than necessary for messages, so that valuable computing time is not lost. 
+
+<div class="p"></div>
+ <h2><a name="tth_sEcA.3">
+A.3</a>&nbsp;&nbsp;Hybrid Code Example</h2>
+
+<div class="p"></div>
+The CAM-CL hybrid code provides a good example of why plasma simulations can require such substantial computational resources.  Our 2-D hybrid code, using the standard parameters detailed in Table <a href="chap4.html#tab:std_params">4.1</a>, uses a computational grid containing 46,080 cells.  The storage of fields and moments for these cells requires around 7 Mb of memory and the processing cost of computing the fields from the moments is around 1.6 &times;10<sup>7</sup> floating point instructions per time step.  The density of ion macroparticles at the start of the simulation is 50 per cell, which means that around 40 Mb of storage is required for their positions and velocities and the calculation of particle trajectories and collection of moments requires around 1.4 &times;10<sup>8</sup> floating point operations each time step.  It is clear that the particles require significantly more computational resources than the fields in terms of both the number of calculations and memory storage.  For this reason, the implementation of the 2-D hybrid algorithm by <a href="refs.html#woodcock97" name="CITEwoodcock97">Woodcock [1997]</a> distributes the storage and movement of particles across a number of machines, whilst performing the field calculations on a single "master" node.
+
+<div class="p"></div>
+The implementation of the CAM-CL algorithm 3-D, however, requires considerably more in the way of computational resources.  If the 2-D computational grid described above gains a width of 128 cells in the z direction, the storage required becomes 3 Gb and 2 &times;10<sup>9</sup> floating point operations are required each time step for the field calculations.  The addition of an additional dimension for the movement of electrons means that, in order to provide a noise level equivalent to the standard 2-D code, the number of ions per cell needs to be raised to the power of 3/2, meaning that 350 ions per cell are required.  The additional number of grid cells, as well as the extra z position information, means that 50 Gb of memory is required and around 10<sup>11</sup> floating point operations are made per time step.
+
+<div class="p"></div>
+The huge amounts of storage and processing required for the particles means that it is not yet practical to run a 3-D simulation on a single machine, so the code needs to be parallelised.  The computational requirements for field storage and computation are comparable with the entire 2-D code, meaning that these tasks must be distributed in order for the computation to be viable, in addition to the parallelisation of the particle calculations.  
+
+<div class="p"></div>
+ <h2><a name="tth_sEcA.4">
+A.4</a>&nbsp;&nbsp;3D Code Development</h2>
+
+<div class="p"></div>
+Our three dimensional hybrid code is designed for running large simulations on Beowulf type clusters. It uses MPI and POSIX threads to implement a client-server model for information exchange. Objects on each slave node are created by a single master process and thereafter run independently. The simulation algorithm sends requests via a queue to the MPI server thread. A callback handler on the remote node then services these requests. It is our intention to apply the Minerva framework to produce a hybrid simulation code for collisionless plasmas. The code is multi-threaded, so that communication between nodes is asynchronous with respect to the algorithm being implemented.
+
+<div class="p"></div>
+This simulation is being written in C++, an object oriented language, to make it easier to maintain and use. This is because many of the concepts in message passing can be viewed as objects. In particular, data sets are objects and the fact that these data sets are distributed across a number of nodes can be hidden from the underlying algorithm because of our object-oriented approach.
+
+<div class="p"></div>
+The modular nature of C++ programming means that it will be relatively easy to modify our parallel hybrid code to produce a Vlasov code.  Simulations could be run using parameters experienced in the heliosphere, since this is the area in which we have the best observational data.  The physics would in many cases, however, translate to outstanding problems in various astrophysical regimes.  Predictions from these simulations could be compared with data from Ulysses and Cluster.
+
+<div class="p"></div>
+We propose to further study the formation of shock front ripples using our 3-D code.  This will model the full geometry of the ripples and their associated wave vector, allowing us to determine the complete power spectrum. This is particularly important in the light of the work conducted by <a href="refs.html#hellinger++96" name="CITEhellinger++96">Hellinger <em>et&nbsp;al.</em> [1996]</a> and <a href="refs.html#hellinger+mangeney97" name="CITEhellinger+mangeney97">Hellinger &amp; Mangeney [1997]</a> to show that "out-of-coplanarity" effects are important at the shock ramp.  This information is also necessary to refine our physical model for the formation of ripples.  A further application of the code would be the quasi-parallel shock.  In this case, the shock transition is mediated by time dependent turbulent structures, which means that there is no single steady shock surface.  2-D hybrid simulations show complex structure at the shock front, but the structure can be fully modelled only with a large scale 3-D simulation. 
+  
+
+<div class="p"></div>
+
+<br /><br /><hr /><small>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 1st March 2003
+</body>
+</html> 
