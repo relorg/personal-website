@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Rob Lowe's Home Page</TITLE>
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+<H1 ALIGN=CENTER>Beowulf Clusters</H1>
+
+<HR>
+<P>
+
+Beowulf technology, as pioneered by <A HREF="http://www.beowulf.org/" target="_top">the Beowulf Project</A>, is a method of networking a large number of commodity off the shelf PCs to work together as a single powerful computer.
+<P>
+The Astronomy Unit at Queen Mary, University of London was able to obtain a JREI grant to build a Beowulf cluster for heavy duty simulation in the fields of Space, Solar and Stellar research.  I was involved in the construction of the cluster and was responsible for the installation and configuration of the software.
+<P>
+The cluster consists of a dual Pentium III Xeon server with 32 Pentium III nodes.  I was also able to write a code to conduct full 3-D hybrid plasma simulations. We had not been able to do this kind of work previously due to the huge amount of memory required. A Beowulf cluster solves this problem by allowing the memory from all the nodes to be pooled. Inter-node communication is then conducted using PVM or, in our case, MPI.
+<P>
+Below are a few notes on the methods that I used to enable the cluster to remote boot from an operating system stored on the server.  I found that much of the documentation on the internet relating so configuring Beowulfs was showing its age and it is quite likely that by this time these notes are equally outdated.
+
+<H3>Etherboot</H3>
+
+In our configuration, each nodes loads a bootstrap program from a floppy disk and downloads the kernel from the server.  We are using the Etherboot program, available at <a href="http://etherboot.sourceforge.net/" target="_top">http://etherboot.sourceforge.net/</a>.
+
+By default, Etherboot uses the TFTP (Trivial File Transfer Protocol) to download the kernel.  When I tried this, however, the download consistently failed.  Etherboot seemed to be flooding the TFTP daemon with request, which caused the init process to suspend it.  However, the <tt>-DDOWNLOAD_PROTO_NFS</tt> option in the .Config file in Etherboot's source directory changes the initial download protocol to NFS, which appears to be reliable.
+
+In our case, the bootstrap file we want is in the src/bin32 directory and is called 3c905c-top.lzrom.  There is also a pre-compiled file for booting the floppy.  To combine these files and produce a bootable floopy to bootstrap your node, use
+<PRE>
+cat floppyload.bin.pre 3c905c-tpo.lzrom > /dev/fd0
+</PRE>
+
+<H3>Remote Booting</H3>
+The kernel requires compiled in support for the following:
+<UL>
+<LI> support for your network card (NOT as a module).
+<LI> IP kernel level autoconfiguration - so the kernel can find its IP address using ...
+<LI> BOOTP support
+<LI> /proc file system support - you'd probably want this anyway
+<LI> NFS file system support (ditto)
+<LI> Root file system on NFS support (so we can store our root directory remotely)
+<LI> DEVFS support (so we can create a virtual /dev directory).  Contrary to some things I've read, this is not in the 2.2 kernel.  It started appearing in the late 2.3 development kernels.  We're currently using kernel 2.4.0-test4, so I'm hoping that a stable release will come along before we go live(!)
+</UL>
+
+Making kernel to start using a root directory mounted via NFS requires a little black magic.  First, create a block special file:
+<PRE>
+mknod /dev/nfsroot b 0 255
+</PRE>
+Now, the tell the kernel image to use it as root by running the following command on the kernel image (which will be a file called bzImage in a directory called something like /usr/src/linux/arch/i386/boot)
+<PRE>
+rdev bzImage /dev/nfsroot
+</PRE>
+
+Some HOWTOs will encourage you to change some settings in the nfsroot.c header file in order to change the default NFS root directory.  We don't have to worry about this because we can use the mknbi program later to change those settings.
+</UL>
+
+In order to remote boot from your newly compiled kernel, you need to let Etherboot know how to start it running.  For this purpose, Etherboot uses the mknbi utility to convert the kernel into tagged image format.  Unfortuanately, I found the mknbi utility supplied with Etherboot to be unusable, so I downloaded the version supplied with Netboot at <a href="http://www.han.de/~gero/netboot.html" target="_top">http://www.han.de/~gero/netboot.html</a>.  You'll want the version in the mknbi-linux directory.  The man pages supplied with mknbi were out of date, so I had to find the command line options by looking at the source code.  In our case, I used the following command on a kernel image called bzImage with an NFS root directory called /nfsroot.  The tagged image file is called kernel:
+<PRE>
+mknbi --root-dir=/nfsroot bzImage kernel
+</PRE>
+I also created an image file called kernel.install for installation purposes.  This starts with a root directory of /nfsroot/install.
+<PRE>
+mknbi --root-dir=/nfsroot/install bzImage kernel.install
+</PRE>
+
+<H3>Prototype node and installation script</H3>
+
+In order to have a template from which to copy configuration information, I set up one node as a prototype.  This node had an operating system and minimal software installed.  It was set up in the usual way with a copy of the RedHat CDROM which I'd put on the server's /scratch disk.  The var and tmp directories were copied to a tar file.
+
+You also need a configuration file for setting up your partitions - in our case it's called /etc/rc.d/rc4.d/hda.out.  I created this by using our prototype node.  The command used to write its partition information in a format suitable for sfdisk was
+<PRE>
+sfdisk -d /dev/hda > hda.out
+</PRE>
+
+In order to configure a virgin node using this information, I used a bootstrap installation script, listed <a href="S99local.txt">here</a>.  The script uses sfdisk to partition the local hard disk.  It creates two ext2 and six swap file systems.  Finally, it copies over the node specific system files.
+
+I ran it from /nfsroot/install/etc/rc.d/rc4.d/S99local.  You'll also need to set the default runlevel to 4 in /nfsroot/install/etc/inittab.  The reason I used a runlevel of 4 is that I really don't want this script to be run accidentally (and runlevel 4 is unused on RedHat systems).
+
+<p>
+
+<HR>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 24th February 2003
+
+</BODY>
+</HTML>

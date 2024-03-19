@@ -1,0 +1,895 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<meta name="GENERATOR" content="TtH 3.22">
+ <style type="text/css"><!--
+ td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
+ td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
+ td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
+ td div.norm {line-height:normal;}
+ span.roman {font-family: serif; font-style: normal; font-weight: normal;} 
+ span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
+ span.overacc1 {position: relative;  left: .6em; top: -1.2ex;} --></style>
+
+                                                                                      
+<title>Chapter 5: Electron Populations in a Quasi-Perpendicular Shock</title>
+
+ <h1><a name="tth_chAp5">
+Chapter 5 </a><br />Electron Populations in a Quasi-Perpendicular Shock</h1>
+
+<a name="chap:elec_pop">
+</a>
+
+<div class="p"></div>
+The usual assumptions of electron acceleration by adiabatic reflection are that the shock structure is stationary, one-dimensional and that the electron gyroradius is much smaller than the shock thickness. In our simulations in Chapter <a href="#chap:ripples">4</a> these approximations are violated: we observe ripples at the ramp and overshoot.  These are magnetic structures that are time dependent and cannot be approximated as one-dimensional.  In this chapter, using our hybrid simulation and a relativistic test particle code, we examine the effect of ripples on electron acceleration.  We propose a new acceleration mechanism based on Fermi acceleration of electrons by structure within the shock transition.  We show how trapping by this two dimensional structure can cause electrons to be convected downstream with the magnetic field, despite having magnetic moments which suggest that they should be reflected upstream.  These electrons undergo considerable Fermi acceleration during the shock transition and may explain observations of an energetic population of electrons downstream of Earth's bow shock.  Preliminary results have been presented in <a href="#lowe+burgess00" name="CITElowe+burgess00">Lowe &amp; Burgess [2000]</a>.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc5.1">
+5.1</a>&nbsp;&nbsp;Previous Work</h2>
+
+<div class="p"></div>
+<a name="sec:elec_pop_background">
+</a>Observations by spacecraft <i>in situ</i> at the Earth's bow shock [<a href="#fan++64" name="CITEfan++64">Fan <em>et&nbsp;al.</em>, 1964</a>,<a href="#anderson++65" name="CITEanderson++65">Anderson <em>et&nbsp;al.</em>, 1965</a>,<a href="#anderson74" name="CITEanderson74">Anderson, 1974</a>] show that it is capable of accelerating electrons to energies up to 100 keV.  This suprathermal distribution appears as spikes of energetic electrons in a narrow region both upstream [<a href="#anderson++79" name="CITEanderson++79">Anderson <em>et&nbsp;al.</em>, 1979</a>] and downstream [<a href="#fan++64" name="CITEfan++64">Fan <em>et&nbsp;al.</em>, 1964</a>,<a href="#anderson69" name="CITEanderson69">Anderson, 1969</a>,<a href="#anderson74" name="CITEanderson74">Anderson, 1974</a>,<a href="#gosling++89" name="CITEgosling++89">Gosling <em>et&nbsp;al.</em>, 1989</a>] of the nearly perpendicular region of the shock surface.  On the other hand, energetic electron fluxes are not present at this level near the quasi-parallel region of the shock.  
+
+<div class="p"></div>
+<a href="#gosling++89" name="CITEgosling++89">Gosling <em>et&nbsp;al.</em> [1989]</a> studied ISEE 1 and 2 data to examine this suprathermal electron population in the region 1-20 keV.  These electrons are seen upstream as a field-aligned beam, but elsewhere the distribution has no significant anisotropy.  The suprathermal flux contributes substantially to the total electron temperature and peaks immediately downstream of the shock, with the highest energy electrons appearing in the overshoot.  The electron energy spectrum has a power law tail that is assumed to continue at least as far as the 100 keV energies that were previously seen.  The distribution immediately downstream of the shock had an exponent ranging from <font face="symbol">-</font
+>3 to <font face="symbol">-</font
+>4.  This compares with the exponent of <font face="symbol">-</font
+>2 to <font face="symbol">-</font
+>3 reported by <a href="#anderson81" name="CITEanderson81">Anderson [1981]</a> for the upstream distribution.
+
+<div class="p"></div>
+The most widely accepted theory for producing high energy electrons at the quasi-perpendicular shock is adiabatic reflection.  This produces beams of field-aligned electrons upstream of the shock whose energy is very strongly dependent on <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>.  It may therefore be possible to explain the upstream suprathermal population by this mechanism, but adiabatic theory alone does not allow a power law spectrum of energetic electrons to be produced downstream of the shock.  This theoretical approach does make some very strong assumptions: the electrons' magnetic moments are assumed to be conserved and the shock structure is assumed to be static.  Simulation results weaken these constraints, but do make some assumptions, for example studying a one dimensional shock means that the effects of structure along the magnetic field cannot be considered.  We here discuss the application of adiabatic theory and look at previous work that has been done with simulations. 
+
+<div class="p"></div>
+     <h3><a name="tth_sEc5.1.1">
+5.1.1</a>&nbsp;&nbsp;Adiabatic theory</h3>
+
+<div class="p"></div>
+<a name="sec:adiabatic_energy">
+</a>The basis of adiabatic electron acceleration [<a href="#leroy+mangeney84" name="CITEleroy+mangeney84">Leroy &amp; Mangeney, 1984</a>,<a href="#wu84" name="CITEwu84">Wu, 1984</a>], which assumes the conservation of magnetic moment, <font face="symbol">m</font
+>, was discussed in Chapter <a href="#chap:elec_review">2</a> and the various reference frames relevant to shock physics are discussed in Section <a href="#sec:shock_frames">1.4.2</a>.  We now look in detail at the expected properties of the electron distribution after adiabatic reflection at the shock [<a href="#lowe+burgess99b" name="CITElowe+burgess99b">Lowe &amp; Burgess, 1999b</a>].  In Section <a href="#sec:adiabatic_reflection_review">2.4.3</a> we showed that the velocity components in the reflected distribution are:
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+v<sub><font face="symbol">||</font
+><span class="roman">r</span></sub> = <font face="symbol">-</font
+>v<sub><font face="symbol">||</font
+></sub> + 2 <b>V</b><sub><span class="roman">HT</span></sub> &#183;</td><td nowrap="nowrap" align="center">
+<div class="comp">^<br /></div>
+<div class="norm"><b>B</b><br /></div>
+<div class="comb">&nbsp;</div>
+</td><td nowrap="nowrap" align="center">
+<font size="-1"></font><!--sup
+--><br /><font size="-1"><span class="roman">0</span></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.1)</td></tr></table>
+
+
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+v<sub><font face="symbol">^</font
+><span class="roman">r</span></sub>=v<sub><font face="symbol">^</font
+></sub></td></tr></table>
+</td><td width="1%">(5.2)</td></tr></table>
+
+
+For the purposes of this discussion, we will examine the properties of electrons in the initial plasma frame.  We will therefore use V<sub><span class="roman">HT</span></sub> = <b>V</b><sub><span class="roman">HT</span></sub><font face="symbol">|</font
+><sub><span class="roman">IPF</span></sub> &#183;[^(<b>B</b>)]<sub><span class="roman">0</span></sub>, which is negative and can be calculated using Equation <a href="#eqn:VHT_IPF">2.15</a>.  We shall express electron velocity components in terms of the pitch angle, <font face="symbol">a</font
+>, and the initial velocity, v, both in the initial plasma frame: 
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+v<sub><font face="symbol">||</font
+></sub>=vcos<font face="symbol">a</font
+></td></tr></table>
+</td><td width="1%">(5.3)</td></tr></table>
+
+
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+v<sub><font face="symbol">^</font
+></sub>=vsin<font face="symbol">a</font
+></td></tr></table>
+</td><td width="1%">(5.4)</td></tr></table>
+
+
+
+<div class="p"></div>
+In our simulations, the initial electron test particle distribution consists of particles distributed randomly and uniformly over a spherical shell in velocity space.  Since the initial population of electrons is distributed over a sphere, the distribution of pitch angle, <font face="symbol">a</font
+>, is
+<a name="eqn:initial_df">
+</a>
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+f(<font face="symbol">a</font
+>) \thinspace d<font face="symbol">a</font
+> <font face="symbol">µ</font
+> sin<font face="symbol">a</font
+>\thinspace d<font face="symbol">a</font
+></td></tr></table>
+</td><td width="1%">(5.5)</td></tr></table>
+
+
+We can calculate the fraction of reflected ions by finding the values of <font face="symbol">a</font
+> between which reflection should occur:
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+</td><td nowrap="nowrap" align="center">
+&nbsp;F<sub><span class="roman">r</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>F<sub><span class="roman">tot</span></sub><br /></td><td nowrap="nowrap" align="center">
+=</td><td nowrap="nowrap" align="center">
+&nbsp;cos<font face="symbol">a</font
+><sub><span class="roman">min</span></sub><font face="symbol">-</font
+>cos<font face="symbol">a</font
+><sub><span class="roman">max</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.6)</td></tr></table>
+
+
+
+<div class="p"></div>
+Conservation of magnetic moment leads to a constraint on <font face="symbol">a</font
+>, which must be between the two solutions of
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+acos<sup>2</sup><font face="symbol">a</font
+> + bcos<font face="symbol">a</font
+> + c = 0</td></tr></table>
+</td><td width="1%">(5.7)</td></tr></table>
+
+
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+a=</td><td nowrap="nowrap" align="center">
+&nbsp;B<sub><span class="roman">1</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>B<sub><span class="roman">0</span></sub><br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.8)</td></tr></table>
+
+
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+b=<font face="symbol">-</font
+>2 </td><td nowrap="nowrap" align="center">
+&nbsp;V<sub><span class="roman">HT</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>v<br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.9)</td></tr></table>
+
+
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+c=</td><td nowrap="nowrap" align="center">
+<table border="0"><tr><td nowrap="nowrap" align="center">
+e</td><td nowrap="nowrap" align="center">
+<div class="comp">~<br /></div>
+<div class="norm"><font face="symbol">f</font
+><sub><span class="roman">0</span></sub><br /></div>
+<div class="comb">&nbsp;</div>
+</td></tr></table>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div><table border="0"><tr><td nowrap="nowrap" align="center">
+&nbsp;1
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2<br /></td><td nowrap="nowrap" align="center">
+mv<sup>2</sup></td></tr></table></td><td nowrap="nowrap" align="center">
++ </td><td align="left" class="cl"><font face="symbol">
+æ<br />è
+</font></td><td nowrap="nowrap" align="center">
+&nbsp;V<sub><span class="roman">HT</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>v<br /></td><td align="left" class="cl"><font face="symbol">
+ö<br />ø
+</font></td><td nowrap="nowrap" align="center">
+<font size="-1">2</font><!--sup
+--><br /><br />
+<font size="-1"></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">
+<font face="symbol">-</font
+> </td><td nowrap="nowrap" align="center">
+&nbsp;B<sub><span class="roman">1</span></sub> <font face="symbol">-</font
+> B<sub><span class="roman">0</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>B<sub><span class="roman">0</span></sub><br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.10)</td></tr></table>
+
+
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.1">
+</a> <center><a href="figs/elec_pop/th88_adiabatic_up.eps">
+<img alt="th88_adiabatic_up" src="images/th88_adiabatic_up.gif" border="0"></a>
+
+<center>Figure 5.1: Velocity space diagram showing adiabatic reflection for a shock with <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, V<sub>0</sub>=4v<sub>A</sub>.  The reflected population is shown in red and the population that transmits is in blue.</center>
+<a name="fig:adiabatic_reflection88">
+</a>
+</center>
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.2">
+</a> <center><a href="figs/elec_pop/th85_adiabatic_up.eps">
+<img alt="th85_adiabatic_up" src="images/th85_adiabatic_up.gif" border="0"></a>
+
+<center>Figure 5.2: Velocity space diagram showing adiabatic reflection for a shock with <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup>, V<sub>0</sub>=4v<sub>A</sub>.  The reflected population is shown in red, the population that transmits is in blue and the population that never interacts with the shock is black.</center>
+<a name="fig:adiabatic_reflection85">
+</a>
+</center>
+<div class="p"></div>
+For V<sub><span class="roman">HT</span></sub> less than the initial electron velocity, v, this may lead to two regions of the electron distribution being transmitted by the shock, as illustrated in Figure <a href="#fig:adiabatic_reflection85">5.2</a>.  If V<sub><span class="roman">HT</span></sub>  <font face="symbol">³</font
+> v, as in Figure <a href="#fig:adiabatic_reflection88">5.1</a>, there can only be one region of the distribution that is transmitted.  This is a result of the fact that the critical pitch angle required for reflection is determined in the de Hoffman-Teller frame, whereas we are looking at the pitch angle distribution in the initial plasma frame.
+
+<div class="p"></div>
+Figure <a href="#fig:adiabatic_reflection85">5.2</a> shows that, when V<sub><span class="roman">HT</span></sub>  &lt;  v, there may be a fraction of the initial electron distribution that immediately escapes upstream without interacting with the shock.  This population can play no further role in producing energetic electrons.  In order to make best use of computational resources we disregard this population in our simulations and modify the value of F<sub><span class="roman">tot</span></sub> accordingly.  This initial cut-off in pitch angle is given by
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+cos<font face="symbol">a</font
+><sub><span class="roman">cut</span><font face="symbol">-</font
+><span class="roman">off</span></sub>  <font face="symbol">£</font
+> </td><td nowrap="nowrap" align="center">
+&nbsp;V<sub><span class="roman">HT</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>v<br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.11)</td></tr></table>
+
+
+
+<div class="p"></div>
+This set of angles specifies how, given the initial pitch angle of an electron, its destination can be determined.  Using the velocity components, we can calculate the final energy of a reflected electron with initial pitch angle <font face="symbol">a</font
+>.
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+E<sub><span class="roman">final</span></sub> = E<sub><span class="roman">init</span></sub> + 2 m \thinspace V<sub><span class="roman">HT</span></sub><sup>2</sup> + m v cos<font face="symbol">a</font
+>\thinspace V<sub><span class="roman">HT</span></sub></td></tr></table>
+</td><td width="1%">(5.12)</td></tr></table>
+
+
+We can calculate the energy spectrum, f(E), of the reflected population in the initial plasma frame.  Differentiating the final energy with respect to <font face="symbol">a</font
+>,
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+</td><td nowrap="nowrap" align="center">
+&nbsp;dE<sub><span class="roman">final</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>d<font face="symbol">a</font
+><br /></td><td nowrap="nowrap" align="center">
+ = m v sin<font face="symbol">a</font
+>\thinspace V<sub><span class="roman">HT</span></sub></td></tr></table>
+</td><td width="1%">(5.13)</td></tr></table>
+
+
+Combining this with Equation <a href="#eqn:initial_df">5.5</a> shows that the reflected electrons have a flat energy spectrum.  Their energies lie between two values, E<sub><span class="roman">max</span></sub> and E<sub><span class="roman">min</span></sub>, which may be determined by applying Equations <a href="#eqn:transpll">2.19</a> and <a href="#eqn:transperp">2.20</a> to the critical angles <font face="symbol">a</font
+><sub><span class="roman">min</span></sub> and <font face="symbol">a</font
+><sub><span class="roman">max</span></sub>.  The energy distribution is therefore:
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+f(E) \thinspace dE = </td><td nowrap="nowrap" align="center">
+&nbsp;1
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>E<sub><span class="roman">max</span></sub><font face="symbol">-</font
+>E<sub><span class="roman">min</span></sub><br /></td><td nowrap="nowrap" align="center">
+\thinspace </td><td nowrap="nowrap" align="center">
+&nbsp;F<sub><span class="roman">r</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>F<sub><span class="roman">tot</span></sub><br /></td><td nowrap="nowrap" align="center">
+\thinspace dE</td></tr></table>
+</td><td width="1%">(5.14)</td></tr></table>
+
+
+for  E<sub><span class="roman">min</span></sub> <font face="symbol">£</font
+> E  <font face="symbol">£</font
+> E<sub><span class="roman">max</span></sub> and f(E) = 0 otherwise.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.3">
+</a> <center><a href="figs/elec_pop/th88_adiabatic_down.eps">
+<img alt="th88_adiabatic_down" src="images/th88_adiabatic_down.gif" border="0"></a>
+
+<center>Figure 5.3: Velocity space diagram showing adiabatic transmission for a shock with <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, V<sub>0</sub>=4v<sub>A</sub>.  The reflected population is shown in red and the population that transmits is in blue.</center>
+<a name="fig:adiabatic_transmission88">
+</a>
+</center>
+<div class="p"></div>
+In the de Hoffman-Teller frame the transmitted population is accelerated only by the cross-shock potential, <font face="symbol">f</font
+>.  In order to conserve magnetic moment, however, the v<sub><font face="symbol">^</font
+></sub> velocity component must increase.  If we disregard <font face="symbol">f</font
+>, the transmitted electron will have a perpendicular velocity component of
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+v<sub><font face="symbol">^</font
+></sub> = </td><td align="left" class="cl">
+<font size="+2">&nbsp;&nbsp;<font face="symbol">æ<br />Ö<br /></font></font></td><td nowrap="nowrap" align="center">
+
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>
+<div class="norm"><table border="0"><tr><td nowrap="nowrap" align="center">
+&nbsp;B<sub>1</sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>B<sub>0</sub><br /></td></tr></table></div>
+<div class="comb">&nbsp;</div>
+</td><td nowrap="nowrap" align="center">
+\thinspace v<sub><font face="symbol">^</font
+></sub></td></tr></table>
+</td><td width="1%">(5.15)</td></tr></table>
+
+
+with a corresponding reduction in v<sub><font face="symbol">||</font
+></sub> in order to conserve energy.  Using these velocity components, we can calculate these final energy of a transmitted electron with initial pitch angle <font face="symbol">a</font
+>:
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+E<sub><span class="roman">final</span></sub> = E<sub><span class="roman">init</span></sub> + m \thinspace V<sub><span class="roman">HT</span></sub><sup>2</sup> + m v cos<font face="symbol">a</font
+>\thinspace V<sub><span class="roman">HT</span></sub> <font face="symbol">-</font
+> m v \thinspace V<sub><span class="roman">HT</span></sub> \thinspace </td><td align="left" class="cl">
+<font size="+2">&nbsp;&nbsp;<font face="symbol">æ<br />Ö<br /></font></font></td><td nowrap="nowrap" align="center">
+
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>
+<div class="norm"><table border="0"><tr><td nowrap="nowrap" align="center">
+ </td><td align="left" class="cl"><font face="symbol">
+æ<br />è
+</font> </td><td nowrap="nowrap" align="center">
+&nbsp;V<sub><span class="roman">HT</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>v<br /></td><td nowrap="nowrap" align="center">
++ cos<font face="symbol">a</font
+></td><td align="left" class="cl"><font face="symbol">
+ö<br />ø
+</font></td><td nowrap="nowrap" align="center">
+<font size="-1">2</font><!--sup
+--><br /><br />
+<font size="-1"></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">
++ </td><td nowrap="nowrap" align="center">
+&nbsp;B<sub>0</sub> <font face="symbol">-</font
+> B<sub>1</sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>B<sub>0</sub><br /></td><td nowrap="nowrap" align="center">
+sin<sup>2</sup> <font face="symbol">a</font
+></td></tr></table></div>
+<div class="comb">&nbsp;</div>
+</td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.16)</td></tr></table>
+
+
+This produces no acceleration for <font face="symbol">a</font
+> = 0<sup><font face="symbol">°</font
+></sup> or <font face="symbol">a</font
+> = 180<sup><font face="symbol">°</font
+></sup>, where E<sub><span class="roman">final</span></sub> = E<sub><span class="roman">init</span></sub>.  Electrons with high <font face="symbol">m</font
+> are preferentially accelerated, as shown in Figure <a href="#fig:adiabatic_transmission88">5.3</a>.  Under ideal conditions, the maximum possible acceleration is produced when <font face="symbol">a</font
+> =  90<sup><font face="symbol">°</font
+></sup> and
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+</td><td nowrap="nowrap" align="center">
+&nbsp;B<sub>0</sub> <font face="symbol">-</font
+> B<sub>1</sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>B<sub>0</sub><br /></td><td nowrap="nowrap" align="center">
+</td><td align="left" class="cl"><font face="symbol">
+æ<br />è
+</font> </td><td nowrap="nowrap" align="center">
+&nbsp;v
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>V<sub><span class="roman">HT</span></sub><br /></td><td align="left" class="cl"><font face="symbol">
+ö<br />ø
+</font></td><td nowrap="nowrap" align="center">
+<font size="-1">2</font><!--sup
+--><br /><br />
+<font size="-1"></font>&nbsp;<br /></td><td nowrap="nowrap" align="center">
+ = 1</td></tr></table>
+</td><td width="1%">(5.17)</td></tr></table>
+
+
+producing acceleration by a factor of
+
+<br clear="all" /><table border="0" width="100%"><tr><td>
+<table align="center"><tr><td nowrap="nowrap" align="center">
+</td><td nowrap="nowrap" align="center">
+&nbsp;E<sub><span class="roman">final</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>E<sub><span class="roman">init</span></sub><br /></td><td nowrap="nowrap" align="center">
+ = 1 + 2 </td><td nowrap="nowrap" align="center">
+&nbsp;V<sub><span class="roman">HT</span></sub>
+<div class="hrcomp"><hr noshade="noshade" size="1"/></div>v<br /></td><td nowrap="nowrap" align="center">
+</td></tr></table>
+</td><td width="1%">(5.18)</td></tr></table>
+
+
+
+<div class="p"></div>
+These predictions of the upstream and downstream electron properties produced by adiabatic theory provide a baseline against which to compare our results.
+
+<div class="p"></div>
+     <h3><a name="tth_sEc5.1.2">
+5.1.2</a>&nbsp;&nbsp;Simulations</h3>
+
+<div class="p"></div>
+<a name="sec:example_simulations">
+</a><a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> ran simulations which aimed to study the effect of removing some of the tight restrictions required by adiabatic theory.  In this work, the shock front was modelled by a one-dimensional hybrid code and electrons were studied by integrating the trajectories of test particles through the fields produced by the hybrid simulation.  This has the effect of removing the constraints that the magnetic moment of electrons should be conserved throughout the shock transition and that the shock front must have a static profile.  The shock potential is also calculated in a self consistent manner.  They found results that agreed well with adiabatic theory, subject to some scatter and heating in perpendicular energy which was felt to be related to short wavelength noise present in the hybrid code.  In particular, it was found that electron acceleration was particularly sensitive to <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>, with the greatest acceleration occurring only when <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> was very near 90<sup><font face="symbol">°</font
+></sup>.
+
+<div class="p"></div>
+<a href="#kraussvarban+burgess91" name="CITEkraussvarban+burgess91">Krauss-Varban &amp; Burgess [1991]</a> extended this work by looking at the effects of the curvature of the bow shock.  This was felt to be particularly important because, according to adiabatic theory, the more highly energised an electron, the longer the interaction time with the shock and the greater the interaction length.  Electrons with energies above several keV were found to interact with the shock over distances of more than 1000 &nbsp;v<sub>A</sub> <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>.  The shock's radius of curvature is R<sub>c</sub>  <font face="symbol">»</font
+> 5000 &nbsp;v<sub>A</sub> <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> and could therefore play an important role.  This work used a modified version of the simulations in <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> which took into account the variation in <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> as electrons moved along the shock front.  This drift of electrons through a range of <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> caused the fraction of high energy electrons found upstream to be significantly reduced.  The highest energy electrons were found to come from the part of the initial electron distribution with a high magnetic moment.  This is not surprising, but does preclude the production of energetic electrons from the bulk of the initial distribution.  An additional observed effect, however, was a focussing of electrons at a given energy to particular points along the shock front.  Significantly, the flux of the highest energy electrons was found to focus into a small area.  They argue that this focussing effect could explain the spikes of energetic electrons and their confinement to a narrow area.
+
+<div class="p"></div>
+<a href="#kraussvarban94" name="CITEkraussvarban94">Krauss-Varban [1994]</a>, building on the work of <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> and <a href="#kraussvarban+burgess91" name="CITEkraussvarban+burgess91">Krauss-Varban &amp; Burgess [1991]</a>, sought to identify the origins of the downstream energetic electrons.  This work also suggested that pitch angle scattering within the shock front may be responsible for the transmission of energetic electrons through the shock.  No physical mechanism was identified, however, and artificial scattering was introduced into the shock transition.  Such scattering produces a downstream electron population with a power law spectrum.  This is as expected, since artificial scattering leads to stochastic acceleration.  We saw in Section <a href="#sec:stochastic_acceln">2.4.1</a> that this will lead to a power law spectrum of accelerated electrons.
+
+<div class="p"></div>
+The First Order Fermi acceleration of electrons in a collapsing magnetic trap was studied by <a href="#gisler+lemons90" name="CITEgisler+lemons90">Gisler &amp; Lemons [1990]</a>.  In their work, they used a 3-D test particle simulation to model reflection by approaching magnetic mirrors that are produced when curved (or straight) flux tubes flow into a straight (or curved) shock.  The acceleration therefore continues until either the entire trap has convected through the shock or the electron has sufficient energy to leave the trap.  This mechanism has a number of drawbacks, however, which make its applicability to the bow shock questionable.  The trap cannot be too small, because then it becomes comparable with electron scales and magnetic moment is no longer conserved.  However, <a href="#gisler+lemons90" name="CITEgisler+lemons90">Gisler &amp; Lemons [1990]</a> found that most of the energy gain occurs in the final interactions with the mirrors, when this is most likely to become an issue.  The acceleration process depends very strongly on the initial energy, since this governs the time between reflections.  The initial energy studied was 2 keV, which is significantly higher than typical solar wind energies at Earth's bow shock.  The electron distribution was found to be bulk heated, with a small number of electrons being accelerated to many times their initial energy.  The distribution did not, however, have a power law tail, so this mechanism cannot reproduce the observed properties of the highest energy electrons.
+
+<div class="p"></div>
+<a href="#vandas01" name="CITEvandas01">Vandas [2001]</a> conducted a study of shock drift acceleration in which the effects of shock thickness, the angle <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>, shock curvature and plasma inflow velocity were investigated.  His investigation used a test particle code with fields generated by a model which included shock structure and curvature.  He also attempted to produce simulated results for a "hypothetical spacecraft" to compare with real spacecraft data.  His comparison with observations showed that the focussing effect of the shock curvature can be used to identify the origins of energetic electron spikes.  The difficulty of reproducing the observed power law tail of the electron distribution above 10&nbsp;keV was, however, not overcome.  Changing the field profile was not found to have a large effect and variation in the shock thickness, curvature and inflow speed produced an increased flux of reflected electrons with no corresponding increase in energy.  The calculated electron distributions were strongly anisotropic, with spectra that could not be fitted by a power law.  The work therefore shows that shock drift acceleration probably occurs in Earth's bow shock in the manner suggested by <a href="#kraussvarban+burgess91" name="CITEkraussvarban+burgess91">Krauss-Varban &amp; Burgess [1991]</a>, but that the most energetic electrons cannot be explained by simply altering the shock properties used in the model.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc5.2">
+5.2</a>&nbsp;&nbsp;Simulation Configuration</h2>
+
+<div class="p"></div>
+Using a two dimensional hybrid simulation and a test particle code, we examine the effect of ripples on electron acceleration. This is done by taking the time varying fields from a self consistent hybrid shock simulation for every time step and using them in a test particle simulation of suprathermal electron motion.  We use the CAM-CL hybrid code and shock configuration described in Chapter <a href="#chap:simulation">3</a>, which means that electrons' contribution to the field structure is not well modelled. In the context of shocks, this means that we do not see some effects that occur in full particle simulations, such as electron scale ripples, but we do observe ion scale ripples, which are generally too large to be modelled by existing full particle PIC codes.  In our configuration, the shock is planar, so we are neglecting curvature effects [<a href="#kraussvarban+burgess91" name="CITEkraussvarban+burgess91">Krauss-Varban &amp; Burgess, 1991</a>].  The upstream plasma is homogeneous, so we neglect upstream waves and large scale inhomogeneity. There is also an artificial downstream barrier, which means that we cannot model downstream wave sources.
+
+<div class="p"></div>
+Ion scale physics is worth studying in the context of electron acceleration since it dominates the shock structure.  Previous studies have shown that electrons can travel hundreds of ion inertial lengths along the shock front [<a href="#kraussvarban+burgess91" name="CITEkraussvarban+burgess91">Krauss-Varban &amp; Burgess, 1991</a>], so they will feel the effect of this structure.  Electrons may, however, produce short wavelength structures which would have an effect on electron behaviour.  The hybrid code therefore imposes considerable constraints, but it is a significant improvement over previous 1-D models in that it allows us to consider structure within the shock field.  It should also be noted that, although we are not able to simulate field structure in the third dimension, the fact that electrons only travel significant distances in a direction parallel to field lines means that they are influenced by such structure much less than the phenomena that we are able to simulate.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.4">
+</a> <center><a href="figs/elec_pop/shock_field.eps">
+<img alt="shock_field" src="images/shock_field.gif" border="0"></a>
+
+<center>Figure 5.4: The variation of <font face="symbol">|</font
+><b>B</b><font face="symbol">|</font
+> along a field line running along the shock front.</center>
+<a name="fig:B_shock">
+</a>
+</center>
+<div class="p"></div>
+Figure <a href="#fig:B_shock">5.4</a> shows the variation in the magnetic field along a field line passing through the shock front.  The rippling of the shock front has a wavelength of a few ion inertial lengths and an amplitude in B<sub>x</sub> of around 2B<sub>0</sub>.  We have described how adiabatic theories assume that the shock structure is stationary, one-dimensional and that the electron gyroradius is much smaller than the shock thickness. In our simulations, the first two of these approximations are violated: we observe magnetic structures that can neither be approximated as stationary nor one-dimensional.  These localised fluctuations in the field strength could lead to variations in the pitch angle constraints for reflection.  They could also result in magnetic mirroring and, since the structure is time dependent, there also exists the possibility of First Order Fermi acceleration.  In Chapter <a href="#chap:ripples">4</a>, we used Fourier transforms to study the power in this structure.  The Fourier transforms shown in Figure <a href="#fig:FT_spectra_shock">4.13</a> shows power over a range of <font face="symbol">w</font
+> and k.  This could lead to electron pitch angle scattering, which is one requirement for diffusive acceleration.
+
+<div class="p"></div>
+As in Chapter <a href="#chap:ripples">4</a>, we again use two orientations of the upstream magnetic field, <b>B</b><sub>0</sub>.  Electrons in the simulations with <b>B</b><sub>0</sub> pointing out of the simulation plane feel no variations associated with 2-D structure along a field line, so we expect electron trajectories to be similar to those in a 1-D simulation.  This serves to validate our interpolation and integration methods.  In our examples, the inflow velocity in the simulation frame is 4v<sub>A</sub>, giving a shock Alfv&#233;n Mach number M<sub>A</sub>=5.66. We use an Alfv&#233;n speed v<sub>A</sub> = 60 <span class="roman">km</span> &nbsp;<span class="roman">s</span><sup><font face="symbol">-</font
+><span class="roman">1</span></sup> and an electron plasma beta <font face="symbol">b</font
+><sub>e</sub>=0.5. These parameters are chosen to resemble conditions in the Earth's bow shock.  Shock properties are a strong function of <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>, so we study two cases: <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup> and <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>. With the two orientations of <b>B</b><sub><span class="roman">0</span></sub> this gives us four combinations of simulation parameters.
+
+<div class="p"></div>
+We use the Thomsen solver, with relativistic effects included, for integrating electron trajectories and bicubic interpolation for calculating the fields, as described in Chapter <a href="#chap:simulation">3</a>. In the light of our testing results from Section <a href="#sec:elec_scheme_compare">3.3</a>, the code uses 20 iterations per electron gyro-time (<font face="symbol">D</font
+>t = 0.05 &nbsp;<font face="symbol">W</font
+><sub>e</sub><sup><font face="symbol">-</font
+>1</sup>) in order to achieve high accuracy.  The effect of changing this time step is discussed in Section <a href="#sec:elec_spec_num_dep">6.1.1</a>.  We use a computational cluster to conduct the simulations, as discussed in Appendix <a href="#chap:3dcode">A</a>.  The simulations were conducted simultaneously across a number of different machines, each calculating trajectories for 5000 particles and starting with different random seeds.  The number of machines available in the computational cluster varied over the course of the study, so the total number of particles in each of our simulations is correspondingly variable.
+
+<div class="p"></div>
+We use an initial electron energy of 100 eV, giving an initial speed of v=98.83 &nbsp;v<sub>A</sub> and corresponding to the tail of the solar wind halo distribution.  We chose this energy because of the observation that the high energy electrons originate from the portion of the electron distribution with high perpendicular energy [<a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em>, 1989</a>].  In velocity space, the initial electron distribution is a uniformly covered spherical shell with a cut-off corresponding to electrons that escape upstream without interacting with the shock. This is done to reduce the computational cost of the simulation.
+
+<div class="p"></div>
+Escape from the shock was determined by looking at the distance from the shock in the shock normal (x) direction.  The x=0 axis was considered to be the line at which the mean magnetic field, averaged over y, first reached 2 B<sub>0</sub>.  This line is located at the bottom of the shock ramp and its position is largely unaffected by fluctuations in the shock structure.  The electrons were initially released with a gyrocentre at x = <font face="symbol">-</font
+>5.0 &nbsp;v<sub>A</sub><font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> and distributed randomly over all y so that they lay on a range of field lines.  They were considered to have escaped upstream if their distance from the shock reached x  <font face="symbol">£</font
+> <font face="symbol">-</font
+>25.0 &nbsp;v<sub>A</sub><font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> and downstream if the distance reached x  <font face="symbol">³</font
+> 10.0 &nbsp;v<sub>A</sub><font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>.  The electron simulation started at t = 10 &nbsp;<font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> in order to ensure that the shock front was clear of the reflecting boundary.  The simulation finished at t = 40 &nbsp;<font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> by which point only a few percent of electrons remained in the interaction region.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc5.3">
+5.3</a>&nbsp;&nbsp;Electron Diagnostics</h2>
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_tAb5.1">
+</a> <center>
+<table>
+<tr><td>Parameters </td><td><font face="symbol">a</font
+><sub><span class="roman">min</span></sub> </td><td><font face="symbol">a</font
+><sub><span class="roman">max</span></sub> </td><td><font face="symbol">a</font
+><sub><span class="roman">cut</span><font face="symbol">-</font
+><span class="roman">off</span></sub> </td><td>E<sub><span class="roman">min</span></sub> </td><td>E<sub><span class="roman">max</span></sub> </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup> </td><td>55<sup><font face="symbol">°</font
+></sup>&nbsp;</td><td>130<sup><font face="symbol">°</font
+></sup> </td><td>131<sup><font face="symbol">°</font
+></sup> </td><td>100 eV </td><td>420 eV </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup> </td><td>88<sup><font face="symbol">°</font
+></sup>&nbsp;</td><td>138<sup><font face="symbol">°</font
+></sup> </td><td>180<sup><font face="symbol">°</font
+></sup> </td><td>690 eV </td><td>1.2 keV </td></tr></table>
+
+
+<center>Table 5.1: Electron distribution function parameters as derived from adiabatic theory.</center>
+<a name="tab:theory_results">
+</a>
+</center>
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_tAb5.2">
+</a> <center>
+<table>
+<tr><td>Parameters </td><td>Upstream </td><td>Downstream </td><td>In Shock </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup>, adiabatic </td><td>74% </td><td>26% </td><td>- </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup>, <b>B</b><sub><span class="roman">0</span></sub> out of plane </td><td>73.9% </td><td>23.4% </td><td>2.7% </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup>, <b>B</b><sub><span class="roman">0</span></sub> in plane </td><td>46.8% </td><td>51.7% </td><td>1.5%   </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, adiabatic </td><td>39% </td><td>61% </td><td>- </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, <b>B</b><sub><span class="roman">0</span></sub> out of plane </td><td>27.2% </td><td>71.6% </td><td>1.2%   </td></tr>
+<tr><td><font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, <b>B</b><sub><span class="roman">0</span></sub> in plane </td><td>3.2% </td><td>96.7% </td><td>0.1%   </td></tr></table>
+
+
+<center>Table 5.2: The location of particles at the end of the simulation, compared with predictions made through adiabatic theory for a shock with V<sub><span class="roman">in</span></sub> = 4 v<sub>A</sub>.</center>
+<a name="tab:frac_ptcle">
+</a>
+</center>
+<div class="p"></div>
+In our simulations, we measured an overshoot magnetic field, B<sub><span class="roman">1</span></sub>, in the range 5.1B<sub><span class="roman">0</span></sub> to 5.5B<sub><span class="roman">0</span></sub>. In the following calculations, we assume a value of B<sub><span class="roman">1</span></sub> = 5.2B<sub><span class="roman">0</span></sub>. We follow <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> by assuming a canonical value of 85&nbsp;eV for the energy gained from the cross shock potential in the de Hoffman-Teller frame by the time the electrons reach the overshoot.  We assume a constant value despite the fact that, in reality, the electric field is not conservative and the actual energy change will depend on the route taken through the shock.  The energy gain is, however, less significant than the value of the overshoot magnetic field and our results are not highly sensitive to it.
+
+<div class="p"></div>
+Using these values, we can apply adiabatic theory to predict properties of the final electron distributions.  Table <a href="#tab:theory_results">5.1</a> shows <font face="symbol">a</font
+><sub><span class="roman">min</span></sub> and <font face="symbol">a</font
+><sub><span class="roman">max</span></sub>, the angles between which we expect the electrons to reflect, as well as <font face="symbol">a</font
+><sub><span class="roman">cut</span><font face="symbol">-</font
+><span class="roman">off</span></sub>, the angle above which electrons escape upstream without interacting with the shock.  The reflected population is expected to have energies between E<sub><span class="roman">min</span></sub> and E<sub><span class="roman">max</span></sub>.  Table <a href="#tab:frac_ptcle">5.2</a> shows the proportion of particles that are expected to escape upstream and downstream, together with the actual destinations from the simulations.  This shows that our simulations with <b>B</b><sub><span class="roman">0</span></sub> pointing out of the simulation plane are consistent with adiabatic theory when <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup>.  
+
+<div class="p"></div>
+For the simulation with <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup>, there is a discrepancy of about 10% between the measured and theoretical values.  Figure <a href="#fig:grl_pitch_angle">5.5</a> shows how the initial pitch angle of an electron affects whether it escapes upstream or downstream.  According to adiabatic theory, as described in Section <a href="#sec:adiabatic_energy">5.1.1</a>, we would expect the transmitted and reflected populations to have sharp boundaries at the critical pitch angles.  In the simulation with <font face="symbol">q</font
+><sub>Bn</sub>=88<sup><font face="symbol">°</font
+></sup> and <b>B</b><sub><span class="roman">0</span></sub> out of the simulation plane, however, the boundaries are not sharply defined.  This suggests that the 10% discrepancy is either produced by variations in the cross shock potential, <font face="symbol">f</font
+>, or is the result of mild variations in pitch angle, possibly as a result of interaction with upstream waves.  Apart from this, both the <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup> and <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=88<sup><font face="symbol">°</font
+></sup> simulations with <b>B</b><sub><span class="roman">0</span></sub> out of the simulation plane are consistent with adiabatic theory.  The simulations in which <b>B</b><sub><span class="roman">0</span></sub> lies in the simulation plane, however, are not consistent with adiabatic predictions.   When the electrons are allowed to feel the 2-D shock structure, the fraction of electrons that escape upstream falls significantly.  We will later show, however, that the shock structure also leads to substantially larger energy gains in both the upstream and downstream populations.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.5">
+</a> <center><a href="figs/elec_pop/pitch_angle_85_in.eps">
+<img alt="pitch_angle_85_in" src="images/pitch_angle_85_in.gif" border="0"></a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/pitch_angle_88_in.eps">
+<img alt="pitch_angle_88_in" src="images/pitch_angle_88_in.gif" border="0"></a>
+
+<div class="p"></div>
+<a href="figs/elec_pop/pitch_angle_85_out.eps">
+<img alt="pitch_angle_85_out" src="images/pitch_angle_85_out.gif" border="0"></a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/pitch_angle_88_out.eps">
+<img alt="pitch_angle_88_out" src="images/pitch_angle_88_out.gif" border="0"></a>
+
+<div class="p"></div>
+<center>Figure 5.5: The distribution of initial pitch angle, <font face="symbol">a</font
+>, for electrons that end the simulation upstream (dashed) and downstream (solid), for <b>B</b><sub>0</sub> in the simulation plane (top) and out of the simulation plane (bottom).</center>
+<a name="fig:grl_pitch_angle">
+</a>
+</center>
+<div class="p"></div>
+For <b>B</b><sub><span class="roman">0</span></sub> out of the plane, Figure <a href="#fig:grl_pitch_angle">5.5</a> shows that reflection occurs over a range of initial pitch angles that is consistent with the predictions of adiabatic theory made in Table <a href="#tab:theory_results">5.1</a>.  When <b>B</b><sub><span class="roman">0</span></sub> is in the simulation plane, however, there are a significant number of electrons whose initial pitch angle suggests that they should reflect, but which become trapped by the shock structure and apparently dragged downstream by the convecting field lines. The peaks of reflected electrons on either side of this trapped population in the <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+=85<sup><font face="symbol">°</font
+></sup> simulation, at pitch angles of around <font face="symbol">a</font
+> = 60<sup><font face="symbol">°</font
+></sup> and <font face="symbol">a</font
+> = 110<sup><font face="symbol">°</font
+></sup>, have parallel velocities that are so high that they are able to reflect sufficiently rapidly to avoid feeling significant magnetic structure in the upstream field.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.6">
+</a> <center><a href="figs/elec_pop/grl_energy_spec.eps">
+<img alt="grl_energy_spec" src="images/grl_energy_spec.gif" border="0"></a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/energy_spec_88.eps">
+<img alt="energy_spec_88" src="images/energy_spec_88.gif" border="0"></a><a name="fig:energy_spec_b">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.6: Electron differential energy spectra in the upstream plasma frame (solid lines downstream, dashed lines upstream) with <b>B</b><sub>0</sub> out of the simulation plane (bottom) and <b>B</b><sub>0</sub> in the simulation plane (top).</center>
+<a name="fig:energy_spec">
+</a>
+</center>
+<div class="p"></div>
+In order to calculate the energy and pitch angle of an electron in our simulation, we need to specify a reference frame.  An electron with an energy of more than 1 &nbsp;<span class="roman">eV</span> has a velocity that is greater than the transformation velocity between any of the plasma rest frames in the simulation.  We find that very few electrons have energies of less than  50 &nbsp;<span class="roman">eV</span>, so our choice of reference frame will have little impact on our results.  For simplicity, therefore, we calculate electron energies and pitch angles in the initial plasma frame.
+
+<div class="p"></div>
+Energy spectra are shown for the upstream and downstream distributions in Figure <a href="#fig:energy_spec">5.6</a>.  Again, the spectra are consistent with adiabatic theory when <b>B</b><sub><span class="roman">0</span></sub> is directed out of the simulation plane. The distributions when <b>B</b><sub><span class="roman">0</span></sub> is in the simulation plane, however, differ. The spectra show similar upstream and downstream levels with a power law tail.  The slope of the power law tail is around <font face="symbol">-</font
+>2 to <font face="symbol">-</font
+>3, which is consistent with the observed values reported by <a href="#gosling++89" name="CITEgosling++89">Gosling <em>et&nbsp;al.</em> [1989]</a> and <a href="#anderson81" name="CITEanderson81">Anderson [1981]</a>.  Although our initial electron distribution function does not mimic the full solar wind distribution, we should expect the power law index of our spectra to be similar to that at other energies.  If this were not the case, the combined energy spectrum would not be consistent with the observed power law.
+
+<div class="p"></div>
+It is also significant that the upstream and downstream distributions are similar when <b>B</b><sub><span class="roman">0</span></sub> is in the simulation plane and electrons are allowed to feel the spatial variations in the magnetic field.  This suggests that the upstream and downstream populations arise from the same source, but that the acceleration mechanism is able to release electrons into both the upstream and downstream regions.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.7">
+</a> <center><a href="figs/elec_pop/mu_ratio_th85_in.eps">
+<img alt="mu_ratio_th85_in" src="images/mu_ratio_th85_in.gif" border="0"></a>
+<a name="fig:mu_change_a">
+</a>
+
+<div class="p"></div>
+<a href="figs/elec_pop/mu_ratio_th88_in">
+<img alt="mu_ratio_th88_in" src="images/mu_ratio_th88_in.gif" border="0"></a>
+<a name="fig:mu_change_b">
+</a>
+
+<div class="p"></div>
+<a href="figs/elec_pop/mu_ratio_th88_out">
+<img alt="mu_ratio_th88_out" src="images/mu_ratio_th88_out.gif" border="0"></a>
+<a name="fig:mu_change_c">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.7: Graphs showing the degree to which magnetic moment is conserved, plotting the logarithm of the ratio of final to initial magnetic moment, <span class="roman">log</span>([(<font face="symbol">m</font
+><sub><span class="roman">final</span></sub>)/(<font face="symbol">m</font
+><sub><span class="roman">final</span></sub>)]), against initial pitch angle, <font face="symbol">a</font
+><sub><span class="roman">init</span></sub>, for all electrons in the simulation.</center>
+<a name="fig:mu_change">
+</a>
+</center>
+<div class="p"></div>
+Adiabatic theory is based on the conservation of the magnetic moment of electrons.  By plotting the logarithm of the ratio of final to initial magnetic moment as a function of initial pitch angle, Figure <a href="#fig:mu_change">5.7</a> shows how magnetic moment in our simulation deviates from this.  The range of the <font face="symbol">m</font
+> ratio that we obtain is larger than that found by <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a>, but is consistent with the significantly larger number of particles that we use.  There are two components to this variation in magnetic moment [<a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em>, 1989</a>]. The first is symmetric about the axis and corresponds to a scatter in perpendicular velocity.  The second component corresponds to bulk perpendicular heating and is exhibited as an overall increase in <font face="symbol">m</font
+>.  Magnetic moment conservation is worse for low initial magnetic moments because a given amount of perpendicular heating results in a larger proportional change.  At pitch angles close to 90<sup><font face="symbol">°</font
+></sup>, the <font face="symbol">m</font
+> conservation is better, with any perpendicular heating being swamped by mild scattering.  There is an element of perpendicular heating in Figure <a href="#fig:mu_change_c">5.7(c)</a>, which corresponds to the <b>B</b><sub><span class="roman">0</span></sub> out of the plane simulation.  We note that <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> also observed this in their simulations with very high values of <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> and that it is also present to a lesser extent in Figure <a href="#fig:mu_change_b">5.7(b)</a>.  <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a> state that all these pitch angle scattering effects are due to small scale deviations in the field structure of the order of the grid size.  Such small scale scattering could have a physical analogue since electron processes, which are not modelled by the hybrid code, produce ripples at electron scales. These would cause a degree of scatter which is, to some extent, reproduced by the numerical effects of the grid.  The extent of the scatter does not seem to depend strongly on either <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> or the direction of <b>B</b><sub><span class="roman">0</span></sub>, however, so we conclude that it will have little influence on our results.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.8">
+</a> <center><a href="figs/elec_pop/th85bp5m4c_v_cmpts.eps">
+<img alt="th85bp5m4c_v_cmpts" src="images/th85bp5m4c_v_cmpts.gif" border="0"></a><a name="fig:v_cmpts_a">
+</a>
+
+<div class="p"></div>
+<a href="figs/elec_pop/th88bp5m4a_v_cmpts.eps">
+<img alt="th88bp5m4a_v_cmpts" src="images/th88bp5m4a_v_cmpts.gif" border="0"></a><a name="fig:v_cmpts_b">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/th88bp5m4b_v_cmpts.eps">
+<img alt="th88bp5m4b_v_cmpts" src="images/th88bp5m4b_v_cmpts.gif" border="0"></a><a name="fig:v_cmpts_c">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.8: Graphs comparing the parallel and perpendicular components of the velocity at the end of the simulation for electrons that escape upstream (top) and downstream (bottom), for a variety of simulation parameters.</center>
+<a name="fig:v_cmpts">
+</a>
+</center>
+<div class="p"></div>
+Figure <a href="#fig:v_cmpts">5.8</a> shows the parallel and perpendicular velocity components of electrons at the end of the simulation, although the power law nature of the energy spectra means that the highest energy particles do not show up clearly.  In all cases, the downstream distribution is centred at the origin.  The adiabatic theory described in Section <a href="#sec:adiabatic_energy">5.1.1</a> indicates that we should expect preferential acceleration of downstream electrons that have high magnetic moments.  This occurs in the simulation designed to remove field structure, shown in Figure <a href="#fig:v_cmpts_c">5.8(c)</a>.  Figures <a href="#fig:v_cmpts_a">5.8(a)</a> and <a href="#fig:v_cmpts_b">5.8(b)</a> have this structure and show much less evidence of preferential acceleration.  In these cases, the downstream spectrum is better represented by a circular arc, with acceleration to a range of energies for all pitch angles.  This process therefore resembles heating.
+
+<div class="p"></div>
+The upstream distribution in Figure <a href="#fig:v_cmpts_a">5.8(a)</a> forms an arc in a similar manner to that seen downstream.  This arc corresponds to a missing portion of the downstream distribution, which strongly suggests that pitch angle scattering within the shock has caused downstream destined electrons to scatter upstream and supports the idea that they are part of the same population.  This would be consistent with the suggestion of <a href="#gosling++89" name="CITEgosling++89">Gosling <em>et&nbsp;al.</em> [1989]</a> that the most energetic upstream electrons were the result of "leakage" from an accelerated downstream population.
+
+<div class="p"></div>
+Figure <a href="#fig:v_cmpts_c">5.8(c)</a> shows an upstream distribution that agrees well the simulations of <a href="#kraussvarban++89" name="CITEkraussvarban++89">Krauss-Varban <em>et&nbsp;al.</em> [1989]</a>.  The distribution has a cut-off in the parallel velocity which corresponds to the minimum velocity required to escape from the shock.  There is also a loss cone feature, consistent with magnetic mirroring.
+
+<div class="p"></div>
+The upstream population in Figure <a href="#fig:v_cmpts_b">5.8(b)</a> has the expected cut-off in the parallel velocity, but there is also a small population of electrons that appear to have escaped upstream with a velocity below the cut-off.  The origin of these electrons is not clear and it is possible that they are a numerical artefact.  More likely, they may represent particles that are scattered in upstream fluctuations related to a foreshock.  These electrons escape upstream in the latter half of the simulation.  We show in Section <a href="#sec:solar_flare_shocks">6.3</a> that, by this time, the energy spectrum is already well developed and these electrons will not, therefore, have an impact on our results.  The upstream distribution lacks the loss cone of Figure <a href="#fig:v_cmpts_c">5.8(c)</a>.  This suggests either that the upstream population either contains an element that has "leaked" from the downstream population or that pitch angle scattering has moved electrons into the loss-cone region.  These results suggest that, if these results are consistent across all initial energies, structure in the shock transition can have a significant effect on the pitch angle distribution of upstream electrons that might be observable.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc5.4">
+5.4</a>&nbsp;&nbsp;Electron Trajectories</h2>
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.9">
+</a> <center><a href="figs/elec_pop/track_1905.eps">
+<img alt="track_1905" src="images/track_1905.gif" border="0"></a><a name="fig:adiabatic_particle_track_a">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/track_4045.eps">
+<img alt="track_4045" src="images/track_4045.gif" border="0"></a><a name="fig:adiabatic_particle_track_b">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.9: Energy, magnetic moment <font face="symbol">m</font
+>, pitch angle <font face="symbol">a</font
+>, total magnetic field <font face="symbol">|</font
+>B<font face="symbol">|</font
+> and spatial trajectories for two electrons whose acceleration is consistent with adiabatic theory.</center>
+<a name="fig:adiabatic_particle_track">
+</a>
+</center>
+<div class="p"></div>
+Figures <a href="#fig:adiabatic_particle_track">5.9</a>, <a href="#fig:trapped_particle_track">5.10</a> and <a href="#fig:anomolous_particle_track">5.11</a> show the trajectories of test particle electrons in the <font face="symbol">q</font
+><sub>Bn</sub>=85<sup><font face="symbol">°</font
+></sup> simulation with the upstream magnetic field in the simulation plane.  The electron gyroradius is around 0.05&nbsp;v<sub>A</sub> <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> and is not resolved.  We did not observe any resonance between the test particle electron trajectories and the width of the simulation box.  In two dimensions, the field lines are not straight, so a particle travelling along a field line will have a fluctuating x position co-ordinate, even if it is not reflecting.  We find that electrons interacting with the shock structure may either behave adiabatically or become trapped within the shock structure.  Electrons that have undergone such trapping can experience significant additional acceleration.  They may escape either upstream or downstream of the shock and, unlike the adiabatic electrons, their final destination is not determined by their initial pitch angle.
+
+<div class="p"></div>
+Figure <a href="#fig:adiabatic_particle_track">5.9</a> shows two examples of electrons that behave in a manner consistent with adiabatic theory.  Both cases show x spatial co-ordinate fluctuation due to the curvature of field lines.  Figure <a href="#fig:adiabatic_particle_track_a">5.9(a)</a> illustrates the adiabatic transmission of an electron.  The electron energy rises in the shock transition as a result of the shock potential and is consistent with our assumed canonical value of 85&nbsp;eV for the acceleration by the shock potential at the overshoot.  Some of this energy is lost on leaving the shock, however, as the shock overshoot is a potential maximum.  This particle shows good magnetic moment conservation and behaves in a manner consistent with adiabatic theory.  Figure <a href="#fig:adiabatic_particle_track_b">5.9(b)</a> shows the trajectory of an adiabatically reflected electron.  Again, the x co-ordinate fluctuates, but there is also one true reflection which is confirmed by the abrupt change in pitch angle, <font face="symbol">a</font
+>, across the <font face="symbol">a</font
+> =  90<sup><font face="symbol">°</font
+></sup> axis.  On this occasion, the energy gained from the shock upon reflection is large compared to the energy gain from the shock's potential.  The electron's magnetic moment is conserved to within around 10 % during the reflection and acceleration.  Upon leaving the shock, the magnetic moment increases by around 60 %, although there is no corresponding rise in the total energy.  This is probably the result of scattering off waves in the foreshock region and, apart from this, the electron behaviour is as expected from adiabatic theory.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.10">
+</a> <center><a href="figs/elec_pop/track_grl.eps">
+<img alt="track_grl" src="images/track_grl.gif" border="0"></a><a name="fig:trapped_particle_track_a">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/track_0853.eps">
+<img alt="track_0853" src="images/track_0853.gif" border="0"></a><a name="fig:trapped_particle_track_b">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.10: Energy, magnetic moment <font face="symbol">m</font
+>, pitch angle <font face="symbol">a</font
+>, total magnetic field <font face="symbol">|</font
+>B<font face="symbol">|</font
+> and spatial trajectories for two electrons that become trapped in the shock structure.</center>
+<a name="fig:trapped_particle_track">
+</a>
+</center>
+<div class="p"></div>
+Figure <a href="#fig:trapped_particle_track">5.10</a> shows the trajectories of two electrons whose energy upon escaping the shock is significantly larger than predicted.  They also show reasonable magnetic moment conservation, to within a factor of two during the shock transition, which is dramatically smaller than the increase in energy.  In Figure <a href="#fig:trapped_particle_track_a">5.10(a)</a> the electron is transmitted by the shock, despite starting with a pitch angle that, according to adiabatic theory, means that it should reflect.  It shows an eight-fold increase in energy, which allows the magnetic moment to be conserved during the shock crossing.  The magnetic field felt by the electrons shows how the particle is initially trapped whilst it is feeling a low magnetic field, consistent with the fact that it would be expected to reflect back upstream.  The pitch angle scatters back and forth around <font face="symbol">a</font
+> =  90<sup><font face="symbol">°</font
+></sup>, consistent with the electron being held within a magnetic trap.
+
+<div class="p"></div>
+The electron in Figure <a href="#fig:trapped_particle_track_b">5.10(b)</a> reflects as expected, but its interaction with the shock is similarly complicated.  The spatial trajectory of the electrons show how they are trapped between field fluctuations whilst traversing the shock. The electrons are reflected many times and are effectively dragged downstream with the magnetic field.  These electrons are being trapped by the two dimensional magnetic field structure at the shock ramp and overshoot.  This explains the dramatic increase in energy since, as the field structure is in motion, the electrons can gain energy by Fermi acceleration.  Also, we showed in Chapter <a href="#chap:ripples">4</a> that the dispersion relation for shock ripples indicates that waves travel in both directions along the shock ramp.  It is therefore possible that collapsing magnetic traps may be formed, which could give rise to First Order Fermi acceleration of the electrons.  The increased time that the electron spends at the shock front will also mean that it can pick up additional energy by drifting along the motional electric field.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.11">
+</a> <center><a href="figs/elec_pop/track_0144.eps">
+<img alt="track_0144" src="images/track_0144.gif" border="0"></a><a name="fig:anomolous_particle_track_a">
+</a>&nbsp;&nbsp;&nbsp;
+<a href="figs/elec_pop/track_3537.eps">
+<img alt="track_3537" src="images/track_3537.gif" border="0"></a><a name="fig:anomolous_particle_track_b">
+</a>
+
+<div class="p"></div>
+<center>Figure 5.11: Energy, magnetic moment <font face="symbol">m</font
+>, pitch angle <font face="symbol">a</font
+>, total magnetic field <font face="symbol">|</font
+>B<font face="symbol">|</font
+> and spatial trajectories for two electrons that show unusual behaviour.  We believe that Figure (a) is subject to numerical inaccuracies for t  &gt;~2 <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>.</center>
+<a name="fig:anomolous_particle_track">
+</a>
+</center>
+<div class="p"></div>
+Figure <a href="#fig:anomolous_particle_track">5.11</a> shows two electron trajectories with unusual features.  Figure <a href="#fig:anomolous_particle_track_a">5.11(a)</a> is interesting because it has the highest final energy (20&nbsp;keV) of any electron in our simulation.  It is therefore a strong candidate for acceleration by a First Order Fermi process.  Whilst trapped in the shock front, the electron's energy increases at a growing rate.  This would be consistent with a collapsing trap since the continual increase in the electron's speed, combined with a reduction in the distance between reflections, would reduce the time between collisions.  The electron also shows a slower growth in magnetic moment.  The spatial trajectory and pitch angle graphs confirm that this acceleration took place in a confined region during which multiple reflections occurred.
+
+<div class="p"></div>
+
+<div class="p"></div>
+<a name="tth_fIg5.12">
+</a> <center><a href="figs/elec_pop/track_0144_xy.eps">
+<img alt="track_0144_xy" src="images/track_0144_xy.gif" border="0"></a>
+
+<center>Figure 5.12: Graph showing how the electron in Figure <a href="#fig:anomolous_particle_track_a">5.11(a)</a> is trapped in the shock transition twice.</center>
+<a name="fig:track_0144_xy">
+</a>
+</center>
+<div class="p"></div>
+Figure <a href="#fig:track_0144_xy">5.12</a> provides a closer look at the trajectory of this electron.  The dramatic acceleration may be explained by the fact that the electron actually passes through the shock transition twice.  Initially, the electron is trapped whilst convecting downstream with the field line and experiences an order of magnitude increase in energy.  This part of the acceleration process is similar to that seen for the majority of downstream trapped electrons and, in the period 1.2 <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>  &lt;~t  &lt;~2 <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>, the electron is clearly reflecting within a collapsing magnetic trap.  Upon leaving the trap, however, the electron has sufficient parallel velocity to escape upstream.  The electron then passes through the shock again and becomes trapped for a second time, receiving a second order of magnitude increase in energy, corresponding to the period t  &gt;~2 <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> in Figure <a href="#fig:anomolous_particle_track_a">5.11(a)</a>.  This behaviour explains the high energy shoulder to the upstream part of the trapped population as seen in Figure <a href="#fig:energy_spec_b">5.3</a>.  This is probably due to numerical effects related to the fact that the reflection time becomes comparable with the electron time step, as discussed in Section <a href="#sec:elec_spec_num_dep">6.1.1</a>.
+
+<div class="p"></div>
+Figure <a href="#fig:anomolous_particle_track_b">5.11(b)</a> shows the trajectory of a reflected electron whose initial pitch angle indicates that it should have transmitted.  The pitch angle graph shows that the electron did not become trapped in the shock structure.  The electron also did not encounter anomalously high magnetic field strengths as a result of rippling.  The magnetic moment, however, had doubled by the time the electron reflected.  The electron started with a relatively small pitch angle, so scattering by upstream fluctuations could cause relatively large changes to the magnetic moment.  The origin of these fluctuations is likely to be related to those that caused the small population of upstream electrons above the velocity cut-off in Figure <a href="#fig:v_cmpts_b">5.8(b)</a>.  This means that electrons that reflects upstream when they are expected to transmit could be the result of either upstream fluctuations related to a foreshock or numerical noise in the hybrid code.  Such electrons do not, however, form a significant part of the trapped population, which appears to be composed of electrons whose initial parameters suggest that they should reflect. 
+
+<div class="p"></div>
+     <h3><a name="tth_sEc5.4.1">
+5.4.1</a>&nbsp;&nbsp;Trapped population</h3>
+
+<div class="p"></div>
+<a name="sec:trapped_pop">
+</a>The electrons that behave adiabatically may be divided into upstream and downstream populations.  These populations do not require the existence of structure in the shock front and they have relatively little interaction with the 2-D structure of the shock.  The upstream population is produced by a single reflection at the shock front and the downstream population passes directly through the shock.  These electrons do not experience trapping or other significant effects as a result of structure in the shock front.  There will, however, be a small population that are reflected (or transmitted) because they encounter higher (or lower) than average values of the magnetic field strength due to the rippling.  This effect does not produce significant additional energisation, as the electrons otherwise behave according to adiabatic predictions, although this will affect the fraction of particles that are reflected.
+
+<div class="p"></div>
+There is, however, an additional population that exists only in the case where electrons can feel the 2-D shock structure.  It arises from trapping by the ripples at the shock front.  None of the electrons in this population behave according to adiabatic predictions and their final destination cannot be determined from their initial parameters.  Instead, the direction of escape is determined only after the acceleration phase.  Electrons with a sufficiently negative parallel velocity component are reflected back upstream whilst the other electrons convect downstream with the field lines.  An electron that is dragged through the shock in this way will reflect many times and may experience considerable Fermi acceleration, either between ripples or between a ripple and the shock overshoot.  This is similar to the acceleration of particles in a wave field, so the acceleration mechanism may have elements in common with the theory of stochastic acceleration described in Section <a href="#sec:stochastic_acceln">2.4.1</a>.  
+
+<div class="p"></div>
+The dispersion relation for ripples found in Chapter <a href="#chap:ripples">4</a>, however, suggests that ripples can travel in both directions along the shock front.  This would lead to the formation of collapsing magnetic traps, which could result in considerable first order Fermi acceleration [<a href="#gisler+lemons90" name="CITEgisler+lemons90">Gisler &amp; Lemons, 1990</a>].  This scenario is evident in our example electron trajectories.  The model for diffusive shock acceleration described in Section <a href="#sec:shock_acceln">2.4.3</a> also produces first order Fermi acceleration.  We showed that this leads to a power law energy spectrum, which may explain the fact that our simulations also appear to produce power law spectra.
+
+<div class="p"></div>
+Electrons with a high magnetic moment are reflected away from the regions of high field created by the ripples and towards the regions of reduced field.  They are therefore trapped whilst initially feeling a lower magnetic field than they would in the case of no rippling.  This means that, if rippling exists, the minimum value of B<sub>1</sub>/B<sub>0</sub> is important, as well as the maximum value.  This reflection and trapping by the shock structure means that the distance travelled along the shock by highly energetic electrons is reduced to  &lt;~50 &nbsp;v<sub>A</sub><font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>, when compared to the value of 1000 &nbsp;v<sub>A</sub><font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup> found by <a href="#kraussvarban94" name="CITEkraussvarban94">Krauss-Varban [1994]</a> in the case of a 1-D shock. This substantially reduces the importance of the bow shock's radius of curvature (R<sub>c</sub>  <font face="symbol">»</font
+> 5000 &nbsp;v<sub>A</sub> <font face="symbol">W</font
+><sub>i</sub><sup><font face="symbol">-</font
+>1</sup>) suggested by <a href="#kraussvarban94" name="CITEkraussvarban94">Krauss-Varban [1994]</a>.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc5.5">
+5.5</a>&nbsp;&nbsp;Summary</h2>
+
+<div class="p"></div>
+Hybrid simulations in 2-D have ripples in the fields that move along the shock front at the overshoot Alfv&#233;n speed. We have shown that the suprathermal portion of the electron distribution function is heavily dependent on 2-D shock structure.  This structure provides a mechanism to accelerate electrons to high energies, producing a field aligned beam upstream and a substantial downstream population in agreement with observations near Earth's bow shock. The high energy tail of the electron energy spectrum is similar for both the upstream and downstream populations, with a power law tail that is also consistent with observations.  For the shocks investigated, the fraction of reflected electrons is reduced compared to the predictions of adiabatic reflection.  In Chapter <a href="#chap:elec_acceln">6</a> we will investigate how the production of suprathermal electrons depends on shock properties at the Earth's bow shock and in solar flares. 
+  
+
+<div class="p"></div>
+
+<br /><br /><hr /><small>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 1st March 2003
+</body>
+</html> 

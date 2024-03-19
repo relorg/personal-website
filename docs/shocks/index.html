@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE>
+Collisionless shock structure and its effect on electron acceleration
+</TITLE>
+</HEAD>
+
+<BODY bgColor="#FFFFFF">
+<H1 align=center>Collisionless shock structure and its effect on electron 
+acceleration</H1>
+<H1 align=center>Robert Lowe</H1>
+<H2 align=center>October 1999</H2>
+<HR>
+
+<H3>Introduction</H3>
+<P>
+Many plasmas may be considered to be collisionless in the sense
+that Coulomb interactions are so rare that it is the global fields in the
+plasma that govern the dynamics. The mean free path in the solar wind near the
+Earth, for example, is of the order of the Earth-Sun distance. Shocks in
+collisionless plasmas are observed to be a source of highly energetic
+electrons. These electrons are seen in locations as diverse as the Earth's bow
+shock and supernova shocks. The exact electron acceleration mechanism, however,
+remains poorly understood.
+<P>
+We investigate structure within quasi-perpendicular collisionless
+shocks. This means that the angle between the upstream magnetic field and the
+normal to the shock plane, <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>, is greater than 45 degrees. Such
+shocks show ripples in the density and magnetic field moving along the shock
+ramp. We use a two-dimensional hybrid code, which models the plasma as ion
+macroparticles and an inertialess electron fluid, to calculate the fields. We
+then study electron acceleration by integrating electron trajectories within
+these fields.
+
+<H3>Adiabatic Reflection</H3>
+
+<P>
+The theory of adiabatic reflection assumes that
+electrons move in a magnetic field that is stationary and one dimensional. The
+gyroradius of the electrons must also be much smaller than the shock thickness.
+In this case, the perpendicular magnetic moment of an electron, (mu), is conserved: <br>
+<img src="eqn1.gif" align="MIDDLE" width="89" height="51" ALT="equation"> <br>
+where <i>m</i> is the electron's mass, <i>v</i>(perp) is the component of its
+velocity perpendicular to the magnetic field and <i>B</i> is the magnetic field
+strength.
+
+<P>
+We work in the de Hoffmann-Teller frame, in which
+the motional electric field (-<b>V</b>&times;<b>B</b>) is zero. This means that
+we can also consider an electron to conserve its energy. The velocity required
+for this transformation from the shock frame is: <br>
+<img src="eqn2.gif" align="MIDDLE" width="151" height="53" ALT="equation"> <br>
+where <b>n</b> is the normal to the shock plane and
+a subscript 0 denotes upstream quantities, so that <b>V</b>o is the
+upstream flow velocity. I shall denote quantities in the de Hoffmann-Teller
+frame with a tilde and unit vectors with a hat. The components parallel and
+perpendicular to <b>B</b>o of <b>v</b>, an electron's velocity in
+the upstream plasma frame, are: <br>
+<img src="eqn3.gif" align="MIDDLE" width="185" height="33" ALT="equation"> <br>
+<img src="eqn4.gif" align="MIDDLE" width="61" height="26" ALT="equation"> <br>
+
+<P>
+Both perpendicular magnetic moment and energy are conserved,
+but there will be some electrons that cannot cross the shock whilst conserving
+both. This leads to a reflected fraction. Since electrons are constrained to
+move along field lines, the reflected electrons have the parallel component of
+their velocity reversed in the de Hoffmann-Teller frame. It is important to
+note that <img src="inline1.gif" width="115" height="31" ALT="equation"> is negative, so
+transforming back to the upstream plasma frame results in an accelerated
+reflected population: <br>
+<img src="eqn5.gif" align="MIDDLE" width="212" height="33" ALT="equation"> <br>
+<img src="eqn6.gif" align="MIDDLE" width="67" height="26" ALT="equation"> <br>
+
+<P>
+Our electron simulations start with an initial test particle
+distribution that is a uniformly covered spherical shell in velocity space. The
+figure below shows the possible destinations for an upstream electron. <br>
+<img src="fig1.gif" align="MIDDLE" width="974" height="530" ALT="figure 1"> <br>
+
+<P>
+This theory allows us to calculate the energy and
+fraction of electrons reflected upstream and compare them with our simulation
+results. Adiabatic reflection has been found to be unable to accelerate
+electrons to the highest observed energies unless <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+is very close to 90 degrees.
+
+<H3>Simulation Results</H3>
+
+<P>
+We simulate a shock by reflecting homogeneous
+plasma, moving at constant velocity, off a stationary perfectly conducting
+barrier. This is a standard method for launching a shock, which is physically
+simple, but provides a clean shock once the shock front is clear of the
+barrier.<br>
+<img src="fig2.gif" align="MIDDLE" width="666" height="542" ALT="figure 2"> <br>
+
+<P>
+The diagram above shows two dimensional structure at
+the shock front in the form of ripples. These results were obtained for
+conditions similar to those in the Earth's bow shock and at <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> of 85 degrees.
+We find that the strength of the ripples increases with both <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>
+and the plasma inflow speed. The <i>y</i>-<i>t</i> slices demonstrate that these ripples are moving
+in both directions along the shock front. By acting as moving magnetic mirrors,
+these ripples may accelerate electrons more than adiabatic reflection alone.
+
+<P>
+We investigate electron behaviour using two orientations
+of the upstream magnetic field, <b>B</b>o. With <b>B</b>o
+lying in the plane of the simulation, electrons move along a field
+line and feel the full 2-D field structure. We also attempt to mimic a 1-D
+simulation by directing <b>B</b>o out of the simulation plane, so that the electrons feel little variation along
+a field line.
+
+<P>
+This figure shows logarithmic spectra of electron 
+energies in the upstream plasma frame at <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> = 85 degrees. The downstream
+population is represented by solid lines and the upstream population by dashed lines.
+
+<P>
+<img src="fig3a.gif" width="50%" height="50%" ALT="figure 3a"> <img src="fig3b.gif" width="50%" height="50%" ALT="figure 3b"> <BR>
+
+Initial electron energy: 0.1 keV <BR>
+Upstream energy range predicted by theory: 0.15 - 0.39 keV
+<P>
+<table border="1" width="226">
+  <tr>
+    <td width="73" rowspan="2"><b>B</b>o direction</td>
+    <td width="133" colspan="2">Fraction</td>
+  </tr>
+  <tr>
+    <td width="57">upstream</td>
+    <td width="76">downstream</td>
+  </tr>
+  <tr>
+    <td width="73">theory</td>
+    <td width="57">&nbsp;87%</td>
+    <td width="76">13%</td>
+  </tr>
+  <tr>
+    <td width="73">out</td>
+    <td width="57">&nbsp;74%</td>
+    <td width="76">23%</td>
+  </tr>
+  <tr>
+    <td width="73">in</td>
+    <td width="57">&nbsp;47%</td>
+    <td width="76">52%</td>
+  </tr>
+</table>
+
+<P>
+The above figure shows electron distributions that are
+broadly consistent with adiabatic theory when <b>B</b>o is directed out of the simulation
+plane. The distributions when <b>B</b>o is in the simulation plane,
+however, differ. Observations downstream of the Earth's bow shock reveal a
+population of electrons with a power law distribution of velocities at high
+energies. Our simulations produce spectra that are consistent with a power law
+when <b>B</b>o is directed in the plane of the simulation. This indicates that shock surface
+ripples are important in understanding the electron acceleration process.
+
+<P>
+The upstream and downstream distributions are similar when <b>B</b>o is in the simulation plane and
+electrons are allowed to feel the spatial variations in the magnetic field.
+This suggests that reflections occur within the shock to such an extent that
+the two distributions become mixed and therefore alike. This additional
+scattering can be attributed to the 2-D structure.
+
+<P>
+In future, we hope to improve the electron test particle code by
+the addition of cubic spline interpolation for the fields. We also propose to
+study the effect of downstream waves on the formation of shock front ripples by
+artificially damping downstream wave activity. An obvious criticism of this
+kind of study is the tight restriction placed on <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> required to produce appreciable
+rippling. We propose to consider the effects of inhomogeneities in the upstream
+field. Larger scale inhomogeneities will be examined by adding a bend to the
+upstream field. Smaller scale effects can be studied by introducing upstream
+waves. This will more accurately resemble the conditions seen at actual shocks
+and may increase the range of <font face="symbol">q</font><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> over which ripples are significant.
+
+<HR>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 3rd September 1999
+
+
+</HTML>

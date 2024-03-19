@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Rob Lowe's Research Science Pages</TITLE>
+</HEAD>
+<BODY BGCOLOR="FFFFFF">
+<H1 ALIGN=CENTER>Space and Solar Plasmas Research</H1>
+
+<HR>
+
+<H3>Background</H3>
+<p>
+My research experience has been gained whilst working towards my PhD and subsequently during my postdoctoral research in the Astronomy Unit at Queen Mary.  My PhD thesis was about electron acceleration to relativistic energies in shock waves located in solar flares and at the Earth's bow shock, which is formed where the solar wind runs into the Earth's magnetic field.  These shock waves are unusual in that they occur in very low density plasma (ionised gas).  Unlike conventional shocks, which are governed by collisional processes, these "collisionless" shocks are dominated by electromagnetic forces.  The mechanism by which electrons are accelerated to high energies in these shocks is a significant outstanding problem in Astrophysics.  Since these conditions are impossible to duplicate on Earth, my work involves using analytical and numerical modelling to explain spacecraft observations.
+<p>
+The following presentations provide further background to my research work:
+<br>
+<A HREF="flares/index.html">"Hybrid simulations of shock waves in solar flares"</A>
+<br>
+<A HREF="shocks/index.html">"Collisionless shock structure and its effect on electron acceleration"</A>
+
+<p>
+<h3>Computational Modelling in C</h3>
+<p>
+Computer simulations of collisionless shocks have shown that ripples can travel along the shock front.  I used a 2-D hybrid code, which models ions as particles and electrons as a fluid, to model these ripples.  By writing software that was able to track the position of the shock front accurately, I was able to develop a comprehensive set of tools in C to analyse my simulation results.  These tools used Fourier and statistical techniques to characterise the ripples' wave properties in relation to other parameters of the shock.  This allowed me to discover, for the first time, some new features of shock ripples.
+<p>
+In order to investigate the effect of ripples on electron acceleration, I developed an electron test particle code.  I encountered a number of difficulties related to the high numerical resolution required to simulate the highest energy electrons for long periods of time.  The standard Runge-Kutta integrator had poor energy conservation properties, so I used a more complicated implicit method.  I experimented with a number of interpolation schemes used to translate the fields between ion and electron scales.  Finally, an adaptive time step was required to ensure stability for the most energetic particles.
+<p>
+A significant obstacle to such electron simulations is the fact that electrons with high initial energies, which undergo the greatest acceleration, represent a small fraction of the initial population.  I overcame this problem by conducting a set of simulations, each with a single starting energy.  I found that the high energy tail of the electron spectrum at the end of the simulation was well approximated by a power law.  By extrapolating this tail using a chi-squared fit, I was able to predict the shape of the spectrum below the numerical resolution of the simulation.  This allowed me to approximate the true initial energy spectrum by combining the set of single energy simulations, weighting each one according to the fraction of the initial population at that energy.  
+<p>
+
+<h3>Theoretical Work</h3>
+<p>
+By investigating the movement of ripples using Fourier techniques, I discovered that they travel along the shock at the local Alfvén wave speed.  I also found that the amplitude of the ripples grows exponentially with distance, with a kink at the position at which the flow becomes slower than the fast wave mode.  I argue that collisionless shocks may be able to support a surface mode, where the discontinuity surface is treated as being the top of the overshoot and the upstream region is that portion of the shock ramp lying between the top of the shock and the fast mode transition.  Upstream of this transition, the surface mode is dominated by lower amplitude wave modes.
+<p>
+My simulations show that a number of commonly used assumptions about the shock structure are violated.  I proposed a new mechanism for electron acceleration based on reflection at the magnetic structure within the shock transition.  These electrons undergo considerable acceleration and are produced over a significantly larger area of the Earth's bow shock than was possible with previous models.  I also showed how trapping by this two-dimensional structure can cause electrons to be carried downstream with the magnetic field, despite having properties which suggest that they should reflect upstream.  This provides an explanation for previously unexplained in situ spacecraft observations of energetic electrons downstream of Earth's bow shock.
+<p>
+<h3>Parallel Simulations in object oriented C++ using Beowulf Technology</h3>
+<p>
+I have been heavily involved in the use of dedicated groups of networked computers, known as Beowulf clusters, which are cheaper to buy and maintain than traditional supercomputers.  This started early on, when I realised that my test particle code could be adapted to run on a Beowulf cluster.  I was responsible for building, configuring and running a prototype cluster of eight nodes and currently manage our 32 node cluster.
+<p>
+During the course of my PhD research, it became clear that a 3-D hybrid code would be useful in studying shock ripples because nothing constrains wave activity in a shock to be coplanar with the magnetic field, although this condition is forced by a 2-D code.  I have therefore developed a 3-D hybrid code that is designed to run in parallel on Beowulf clusters.  Hybrid codes are significantly more difficult to parallelise than test particle codes, since each region of the computational grid needs to be able to communicate with every other region.  This can potentially make communications delays a real problem, although my innovative approach of using an object oriented client/server system based on C++ and MPI, rather than conventional synchronous messaging, means that the application runs efficiently and in a scalable manner.
+<p>
+<h3>Analysis Tools in object oriented C++ with a Qt GUI</h3>
+<p>
+I have made my data analysis tools easier to use by designing GUI front-ends to replace text configuration files.  I use an object-oriented, C++ based design in which the graphing and analysis classes implement common base classes.  Each of these classes is associated with a Qt widget that allows their properties and parameters to be configured.  In this way, I have been able to build up a library of tools that are easy to extend and implement in a variety of projects.
+<p>
+I have so far implemented a browser application for my simulation output files, which allows data objects to be displayed in a hierarchical structure, selected using drag and drop and transferred into widgets that allow simple data analysis and the production of graphs and movies.
+
+<HR>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 24th February 2003
+
+
+</BODY>
+</HTML>

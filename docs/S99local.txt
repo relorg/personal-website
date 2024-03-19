@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+echo About to partition your hard drive ...
+echo You have 5 seconds to abort ...
+sleep 5
+
+echo Partitioning ...
+sfdisk /dev/hda < /etc/rc.d/rc4.d/hda.out
+
+echo Setting up file systems ...
+mke2fs /dev/hda1
+mke2fs /dev/hda5
+
+echo Setting up swap file systems ...
+mkswap /dev/hda6
+mkswap /dev/hda7
+mkswap /dev/hda8
+mkswap /dev/hda9
+mkswap /dev/hda10
+mkswap /dev/hda11
+
+echo Mouting /dev/hda1 as /system ...
+mount /dev/hda1 /system
+
+echo untarring /var ...
+tar -C /system -xzf /var.tar.gz
+
+echo untarring /tmp
+tar -C /system -xzf /tmp.tar.gz
+
+echo Creating system directories ...
+mkdir /system/proc
+mkdir /system/etc
+mkdir /system/automount
+cp /etc/HOSTNAME /system/etc/HOSTNAME
+
+echo Shutting down ...
+sleep 2
+shutdown -h now

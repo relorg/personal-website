@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<meta name="GENERATOR" content="TtH 3.22">
+ <style type="text/css"><!--
+ td div.comp { margin-top: -0.6ex; margin-bottom: -1ex;}
+ td div.comb { margin-top: -0.6ex; margin-bottom: -.6ex;}
+ td div.hrcomp { line-height: 0.9; margin-top: -0.8ex; margin-bottom: -1ex;}
+ td div.norm {line-height:normal;}
+ span.roman {font-family: serif; font-style: normal; font-weight: normal;} 
+ span.overacc2 {position: relative;  left: .8em; top: -1.2ex;}
+ span.overacc1 {position: relative;  left: .6em; top: -1.2ex;} --></style>
+
+                                                                                      
+<title>Chapter 7: Summary and Conclusions</title>
+
+  
+ <h1><a name="tth_chAp7">
+Chapter 7 </a><br />Summary and Conclusions</h1>
+<a name="chap:conclusion">
+</a>
+
+<div class="p"></div>
+In this thesis, we have described models for solar flares which feature one or more reconnection sites, with the possibility of fast mode shocks being generated when the reconnection jets impact on the photosphere.  We then discussed observations and theories relating to the acceleration of electrons to high energies during the impulsive phase.  We also attempted to look at how comparisons may be made between shocks in solar flares and the Earth's bow shock, where detailed observations of shock accelerated electrons are available.
+
+<div class="p"></div>
+We discussed the various methods available to us to simulate collisionless shocks numerically.  We focused in detail on the hybrid scheme for field modelling.  In particular, we looked at the CAM-CL algorithm, a 2-D version of which we use for all field simulations.  We showed that our results on ripple generation are independent of numerical parameters and can be considered to be physically realistic.  We discussed test particle codes and presented our results comparing various schemes for integrating trajectories and interpolating fields.  We showed that our electron trajectory integrator has excellent magnetic moment and energy conservation properties.  We found only small deviations when test particles were confined in a magnetic bottle for times comparable with the duration of our simulations.  There was, however, evidence that electrons can artificially escape from their magnetic traps when the reflection time becomes comparable with the electron time step.
+
+<div class="p"></div>
+We generated a shock by reflecting homogeneous plasma moving at constant velocity off a stationary, perfectly conducting barrier, which provides a clean shock once the shock front is clear of the reflecting barrier.  We conducted simulations using two orientations of the upstream magnetic field, <b>B</b><sub>0</sub>. The first had <b>B</b><sub>0</sub> lying in the plane of the simulation, allowing electrons to move along the field line and feel the full 2-D field structure. The second had <b>B</b><sub>0</sub> pointing out of the simulation plane, so that the electrons felt no variation along the field line associated with 2-D structure. This configuration was intended to mimic a 1-D simulation. We used parameters chosen to resemble conditions in the Earth's bow shock.
+
+<div class="p"></div>
+Simulations of quasi-perpendicular collisionless shocks show ripples in the density and magnetic field moving along the shock ramp.  The ripples are most clearly visible in the shock normal component of the magnetic field.  Using our 2-D hybrid code, we simulated these ripples.  We found that significant structure only exists for supercritical shocks.  The amplitude of the ripples is strongly dependent on the size of the overshoot, which in turn depends on the plasma inflow speed.  In comparison with the size of the overshoot, the power in the ripples has a much weaker dependence on the angle <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>.  There is, however, a clear trend of increasing power in the ripples with increasing <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>.
+
+<div class="p"></div>
+We have investigated the movement of ripples using Fourier techniques and discovered that they travel along the shock overshoot at the local Alfv&#233;n speed.  We also found that the amplitude of the ripples grows exponentially with distance, with a kink at the position at which the flow becomes sub-fast.  We argued that collisionless shocks may be able to support a surface mode, where the discontinuity surface is treated as being the top of the overshoot and the upstream region is that portion of the shock ramp lying between the top of the overshoot and the sub-fast transition.  Upstream of this transition, the flow speed is greater than all plasma wave speeds and the surface mode becomes evanescent.
+
+<div class="p"></div>
+Adiabatic reflection theory makes the assumptions that the shock structure is stationary, one-dimensional and that the electron gyroradius is much smaller than the shock thickness.  In our simulations with <b>B</b><sub><span class="roman">0</span></sub> in the simulation plane, these approximations were violated: we observed magnetic structures that are time dependent and cannot be approximated as one-dimensional.  Using our hybrid simulation and a relativistic test particle code, we examined the effect of ripples on electron acceleration.  We have proposed a new mechanism for electron acceleration based on Fermi acceleration by structure within the shock transition.  We showed how trapping by this two dimensional structure can cause electrons to be convected downstream with the magnetic field, despite having magnetic moments which suggest that they should be reflected upstream.  These electrons undergo considerable Fermi acceleration during the shock transition and may explain observations of an energetic population of electrons downstream of Earth's bow shock.
+
+<div class="p"></div>
+We investigated the resulting electron energy spectra and compared the simulated power law indices with those derived from <i>in situ</i> measurement downstream of Earth's bow shock.  The accelerated electron distribution function depended on whether the upstream magnetic field was in, or out of, the plane of the simulation, showing that 2-D structure is important in understanding the acceleration process. When 2-D structure was included, the upstream and downstream populations had comparable fluxes at energies above a cut-off that is determined by the shock geometry.  This suggests that reflections occur within the shock to such an extent that the final destinations of the electrons are randomised and the upstream and downstream distributions become similar.  The energy spectrum of these trapped populations had a power law tail that extended down to the numerical resolution of the simulation.  The upstream population had a shoulder to the distribution at high energies, but this appears to be a numerical artefact due to artificial transfer between magnetic traps.
+
+<div class="p"></div>
+The acceleration time for electrons in our simulations was of the order of the ion cyclotron time and is therefore very short.  Adiabatically reflected electrons appear to act as the seed population for trapping.  Those shocks which were not expected to produce any adiabatic reflection were relatively poor at producing a trapped population.  The dependence of the trapped population on inflow velocity is therefore very strong, since the inflow needs to be sufficiently fast that the shock is supercritical in order to produce rippling, but not so fast that electrons are unable to reflect at the shock transition.  In contrast, we found that the dependence of the accelerated electron spectrum on <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub> was surprisingly weak.  This is very different from adiabatic theory, where significant electron acceleration can only take place when the shock is within a few degrees of perpendicular.
+
+<div class="p"></div>
+This new trapping mechanism could be responsible for the power law distribution of high energy electrons that is reported in the vicinity of the quasi-perpendicular Earth's bow shock.  It also explains how energetic electrons can be transported downstream.  It is less clear whether this process can occur in solar flares, however, as it is not certain that supercritical shocks can be generated there.
+
+<div class="p"></div>
+ <h2><a name="tth_sEc7.1">
+7.1</a>&nbsp;&nbsp;Future Work</h2>
+
+<div class="p"></div>
+This thesis has revealed significant scope for future work.  In Appendix <a href="#chap:3dcode">A</a>, we describe the progress we have made towards writing a parallel 3-D hybrid plasma code.  Such a code would allow us to model ripple generation in three dimensions.  This would allow us to study ripple properties out of the coplanarity plane, which could also be important in the context of electrons acceleration, since electrons drift along this direction during the shock transition and hence pick up energy from the motional electric field.  There is also significant scope for further analysis of rippling in the 2-D code. For example, we could make a more thorough analysis of the B<sub>y</sub> and B<sub>z</sub> field components shown in Figure <a href="#fig:ripple_fourier_components">4.15</a>.  This might provide further information that we can use in producing an analytical model of ripples.
+
+<div class="p"></div>
+Our theoretical treatment of electron acceleration has produced predictions that could have observational consequences.  In particular, we would like to be able to predict pitch angle distributions and power law spectral indices.  To make verifiable predictions, however, we will need to conduct simulations with a continuous spectrum of initial energies, E<sub><span class="roman">init</span></sub>, in order to simulate the unshocked energy spectrum of the solar wind.  In order to produce results that are valid for higher energies we will first need to include an adaptive time step in the electron code.  The ability to model the electron spectrum out to higher energies would also allow us to study the relativistic transition with greater accuracy.
+
+<div class="p"></div>
+Many aspects of the work described in Chapter <a href="#chap:elec_acceln">6</a> could be explored in more detail.  A key result of this study is that, in contrast to adiabatic theory, the properties of trapped electrons are more sensitive to the shock's Alfv&#233;n Mach number, M<sub>A</sub>, than the angle <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>.  Further work might therefore consist of generating a range of shock simulations with inflow speeds and a range of values of <font face="symbol">q</font
+><sub><span class="roman">B</span><sub><span class="roman">n</span></sub></sub>.  This would allow us to more accurately predict the fraction of electrons that would be trapped for a given set of shock parameters.
+
+
+<div class="p"></div>
+
+<br /><br /><hr /><small>
+Page Maintained By : 
+Rob Lowe<BR>
+Last Revision : 1st March 2003
+</body>
+</html> 
